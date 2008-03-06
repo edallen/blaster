@@ -1,0 +1,16 @@
+---
+:bacteria_file: "bacteria.yaml"
+:blast_path: "/home/allen/blast/"
+:data_dir: "data/"
+:results_dir: "results/"
+:log_dir: "logs/"
+:db_dir: "db/FASTA/"
+:human_db_root: "human_genomic."
+:human_db_exts:
+- "00"
+- "01"
+- "02"
+:other_db_root: "other_genomic"
+:genome_fastas_dir: "genome_fastas/"
+:blast_out_dir: "results/"
+

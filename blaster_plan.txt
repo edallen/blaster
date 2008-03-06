@@ -1,0 +1,43 @@
+## Planned Structure of blast directory with new blaster script
+
+D blast
+D   blast-2.2.17    # The blast software
+L   current         # A soft link to the current version of the blast software, in case we use more than one
+D   db              # The blast database directory
+D     FASTA         # db subdirectory containing fasta formatted database files
+D   bin             # Directory containing all my scripts
+D     blaster       # subdirectory containing the blaster program
+F       blaster.rb  # the main program for slicing genomes into 40mers, 
+                    #     screening, blasting, and binning probe candidates
+F       config.yaml # config file for blaster.rb and subprograms
+D       lib         # Directory containing Ruby class files for subprograms of blaster.rb
+D       test        # Directory containing Ruby Test::Unit test files for methods of blaster and classes
+D   data            # Directory containing input data used by blaster.rb
+F     bacteria.yaml # Structured list of bacteria to blast, each identified by NC_ID, genus, and species
+D     genome_fastas # Directory containing all fasta files for genomes to blast
+F       NC_XXXXXXX.fna # each bacterium will have one of these fasta files named by ID
+D   results         # Directory containing output of blaster.rb
+D       NC_XXXXXXX_genus_species_strain  # each organism will have a name directory for its results
+F         NC_XXXXXXX_human_bin  # bin file for human matches (if it has a good match to human)
+F         NC_XXXXXXX_other_bin  # bin file for other matches 
+                                #(if no good match to human but good match to something else)
+F         NC_XXXXXXX_genus_bin  # bin file for genus matches (only good matches to same genus and species)
+F         NC_XXXXXXX_species_bin # bin file for species matches (only good match to same species)
+F         NC_XXXXXXX_blast_candidates.fasta # fasta file of 40mers created after screen
+F         NC_XXXXXXX_blast_candidates_after_human.fasta # fasta file of 40mers remaining after human bin pulled out
+
+D   logs            # log files of runs of blaster.rb     
+F     run_log_<datetime>.log  # Each run will generate a log id'ed by date and time of start
+
+
+
+
+USAGE (some details could vary):
+Place fasta files properly named into genome_fastas directory.
+Place bacteria.yaml file containing formatted list of bacteria to run into data directory.
+Check and possibly edit config.yaml for conditions
+Change directory (cd) to blast/bin/blaster
+Run the program with "./blaster.rb"
+Observe progress by using tail on the log or possibly have some command line feedback.
+When it completes, check the log file for the run and examine bin files.
+
