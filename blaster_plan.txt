@@ -41,3 +41,9 @@ Run the program with "./blaster.rb"
 Observe progress by using tail on the log or possibly have some command line feedback.
 When it completes, check the log file for the run and examine bin files.
 
+Status:
+
+blaster.rb basically done
+bacterium.rb bin_human and later methods to write, needs lots of tests
+blast_hash.rb   tests to do
+my_dna.rb tests complete

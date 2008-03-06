@@ -5,38 +5,88 @@ require 'bio'
 require 'test/unit'
 require '../lib/my_dna'
 
-class TestLoopback < Test::Unit::TestCase
+class TestMyDNA < Test::Unit::TestCase
   def test_loopback_true
-    dna = MyDNA.new('aaaattttt')
+    dna = MyDNA.new('aaaaaaaaatttttttttt')
     assert( dna.loopback?(3), "#{dna} has a loopback" )
+    dna = MyDNA.new('AAAAAAAAATTTTTTTTTT')
+    assert( dna.loopback?(3), "#{dna} has a loopback" )
+    dna = MyDNA.new('cgcgcgcgcgcgcgcgcgcgcgcgcgcgcgcgcgcg')
+    assert( dna.loopback?(5), "#{dna} has a loopback" )
+    dna = MyDNA.new('CGCGCGCGCGCGCGCGCGCGCGCGCGCGCGCGCGCG')
+    assert( dna.loopback?(5), "#{dna} has a loopback" )
   end
   
   def test_loopback_false
     dna = MyDNA.new('acacacacac')
-    assert_not_nil( dna.loopback?(3), "#{dna} has no loopback" )
+    assert(!dna.loopback?(3), "#{dna} has no loopback" )
+  end
+  
+  def test_cg_center_true
+    dna = MyDNA.new('cgcgcgcgcgcgcgcgcgcgcgcgcgcgcgcgcgcgcgcgcgcgcgcgcgcgcgcgcgc')
+    assert(dna.cg_center?)
+    dna = MyDNA.new('ggggggggggggggggggggggggggggggggggggggggggggggggggg')
+    assert(dna.cg_center?)
+    dna = MyDNA.new('ccccccccccccccccccccccccccccccccccccccccccccccccccc')
+    assert(dna.cg_center?)
+    dna = MyDNA.new('CGCGCGCGCGCGCGCGCGCGCGCGCGCGCGCGCGCGCGCGCGCGCGCGCGCGCGCGCGC')
+    assert(dna.cg_center?)
+    dna = MyDNA.new('GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG')
+    assert(dna.cg_center?)
+    dna = MyDNA.new('CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC')
+    assert(dna.cg_center?)
+  end
+  
+  def test_cg_center_false
+     dna = MyDNA.new('cgcgcgcgcgcgcgatatatatatatatatatatatatatatatcgcgcgcgcgcgcgcgcgc')
+     assert(!dna.cg_center?)
+     dna = MyDNA.new('ggggggggggggttttttttttttttttttttttttgggggggggggggggg')
+     assert(!dna.cg_center?)
+     dna = MyDNA.new('ccccccccccccaaaaaaaaaaaaaaaaaaaaaaaaaaaccccccccccccc')
+     assert(!dna.cg_center?)
+     dna = MyDNA.new('CGCGCGCGCGCGCGATATATATATATATATATATATATATATATCGCGCGCGCGCGCGCGCGC')
+     assert(!dna.cg_center?)
+     dna = MyDNA.new('GGGGGGGGGGGGTTTTTTTTTTTTTTTTTTTTTTTTGGGGGGGGGGGGGGGG')
+     assert(!dna.cg_center?)
+     dna = MyDNA.new('CCCCCCCCCCCCAAAAAAAAAAAAAAAAAAAAAAAAAAACCCCCCCCCCCCC')
+     assert(!dna.cg_center?)
+  end
+  
+  def test_run_of_four_bases
+    dna = MyDNA.new('cgcgcgcgcgcgcgatatatatatatatatatatatatatatatcgcgcgcgcgcgcgcgcgc')
+    assert(!dna.run_of_four_bases?)
+    dna = MyDNA.new('ggggggggggggttttttttttttttttttttttttgggggggggggggggg')
+    assert(dna.run_of_four_bases?)
+    dna = MyDNA.new('ccccccccccccaaaaaaaaaaaaaaaaaaaaaaaaaaaccccccccccccc')
+    assert(dna.run_of_four_bases?)
+    dna = MyDNA.new('CGCGCGCGCGCGCGATATATATATATATATATATATATATATATCGCGCGCGCGCGCGCGCGC')
+    assert(!dna.run_of_four_bases?)
+    dna = MyDNA.new('GGGGGGGGGGGGTTTTTTTTTTTTTTTTTTTTTTTTGGGGGGGGGGGGGGGG')
+    assert(dna.run_of_four_bases?)
+    dna = MyDNA.new('CCCCCCCCCCCCAAAAAAAAAAAAAAAAAAAAAAAAAAACCCCCCCCCCCCC')
+    assert(dna.run_of_four_bases?)
+    dna = MyDNA.new('cgcgcgcgcgcgcgatatatatatatatattttatatatatatatcgcgcgcgcgcgcgcgcgc')
+    assert(dna.run_of_four_bases?)
+  end
+  
+  def test_gc_18_to_22
+    dna = MyDNA.new('CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC')
+    assert(!dna.gc_18_to_22?)
+    dna = MyDNA.new('cgcgcgcgcgcgcgcgcgcgcgcgcgcgcgcgcgcgcgcg')
+    assert(!dna.gc_18_to_22?)
+    dna = MyDNA.new('atatatatatatatatatatatatatatatatatatatat')
+    assert(!dna.gc_18_to_22?)
+    dna = MyDNA.new('atatatatatatatatagcgcgcgcgcgcgcgcgcgcgcg')
+    assert(!dna.gc_18_to_22?)
+    dna = MyDNA.new('atatatatatatatatatcgcgcgcgcgcgcgcgcgcgcg')
+    assert(dna.gc_18_to_22?)
+  end
+  
+  def test_pass_all_screens?
+     dna = MyDNA.new('atatatatatatatatatcgcgcgcgcgcgcgcgcgcgcg')
+     assert(!dna.pass_all_screens?)
+     dna = MyDNA.new('acataagtacatcacgcgcgcgcgcgtgcgtgcgatttat')
+     assert(dna.pass_all_screens?)
   end
 end 
 
-# METHODS NEEDING TESTS
-# def cg_center?
-#   self[19..20] =~ /[CG][CG]/
-# end
-# 
-# def run_of_four_bases?
-#   self =~ /AAAA|TTTT|CCCC|GGGG/
-# end
-# 
-# def gc_18_to_22?
-#     # should be true when gc out of the 45-55% range for 40mers
-#     no_at = self.gsub("A","").gsub("T","").length
-#     (18..22).include?(no_at)
-# end
-# 
-# def pass_all_screens?
-#   loopback_match_length = 8
-#   return false if ! self.cg_center?
-#   return false if self.run_of_four_bases?
-#   return false if ! self.gc_18_to_22?
-#   return false if self.loopback?(loopback_match_length)
-#   return true
-# end

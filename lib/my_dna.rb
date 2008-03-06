@@ -21,16 +21,16 @@ class MyDNA < Bio::Sequence::NA
   end
   
   def cg_center?
-    self[19..20] =~ /[CG][CG]/
+    self[19..20] =~ /[CGcg][CGcg]/
   end
   
   def run_of_four_bases?
-    self =~ /AAAA|TTTT|CCCC|GGGG/
+    self =~ /AAAA|TTTT|CCCC|GGGG|aaaa|tttt|cccc|gggg/
   end
   
   def gc_18_to_22?
       # should be true when gc out of the 45-55% range for 40mers
-      no_at = self.gsub("A","").gsub("T","").length
+      no_at = self.gsub("A","").gsub("T","").gsub("a","").gsub("t","").length
       (18..22).include?(no_at)
   end
   

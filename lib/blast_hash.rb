@@ -1,9 +1,11 @@
 class BlastHash < Hash 
   @@config = YAML.load_file("../config/config.yaml")
   @@results_folder_path = Pathname.new(@@config[:blast_path] + @@config[:results_dir])
+  
   def initialize(nc_id)
-    @nc_id
-    fasta = some_method_on(@nc_id)
+    @nc_id = nc_id
+    fasta_txt = self.read_fasta_file()
+    fasta = Bio::FastaFormat.new(fasta_txt)
     @whole_seq = MyDNA.new(fasta.seq)
     @hash_count = 0
     @good_count = 0
@@ -19,6 +21,15 @@ class BlastHash < Hash
         self[@hash_count] = @test_seq
       end
     end
+  end
+  
+  def read_fasta_file
+    fasta_file_path = Pathname.new(@@config[:blast_path] + @@config[:data_dir] + @nc_id + ".fna")
+    fasta_txt = ""
+    File.open(f).each do |line|
+      fasta_txt << line
+    end
+    fasta_txt
   end
   
   def write_to_fasta(bac_dir,nc_id)
