@@ -1,6 +1,6 @@
 ---
 :bacteria_file: "bacteria.yaml"
-:blast_path: "/Users/allen/Desktop/blast/"
+:blast_path: "/home/allen/blast/"
 :data_dir: "data/"
 :results_dir: "results/"
 :log_dir: "logs/"
