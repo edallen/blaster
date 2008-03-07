@@ -6,9 +6,11 @@ require 'bio'
 require 'yaml'
 
 # Requires of my own code
-require 'bin/my_dna'
-require 'bin/blast_hash'
-require 'bin/bacterium'
+require 'lib/my_dna'
+require 'lib/blast_flora'
+require 'lib/blast_hash'
+require 'lib/bacterium'
+
 
 # Requires of own files
 ## require 'screen'
@@ -18,14 +20,7 @@ require 'bin/bacterium'
 # Stanford Genome Technology Center
 # Feb 20, 2008
 
-class BlastFlora
 
-  def initialize
-    @config = YAML.load_file("config/config.yaml")
-    @bacteria_file_path = Pathname.new(@config[:blast_path] + @config[:data_dir] + @config[:bacteria_file])
-    @a_bacteria = open(@bacteria_file_path) {|f| YAML.load(f)}
-  end
-end
 
 blaster = BlastFlora.new()
 # Iterate over a_bacteria, making a Bacterium object for each, and telling it to blast itself
