@@ -27,7 +27,7 @@ require 'lib/bacterium'
 blaster = BlastFlora.new()
 # Iterate over a_bacteria, making a Bacterium object for each, and telling it to blast itself
 blaster.a_bacteria.each do |b|
-  bac = Bacterium.new(b.nc_id,b.species,b.genus)
+  bac = Bacterium.new(b[:nc_id],b[:genus],b[:species],b[:strain])
   bac_dir = bac.make_dir()
   bac.blast_hash.write_to_fasta(bac_dir,bac.nc_id)
   bac.blast_human()

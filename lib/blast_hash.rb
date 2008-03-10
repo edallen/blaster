@@ -1,4 +1,5 @@
 class BlastHash < Hash 
+  require 'yaml'
   @@config = YAML.load_file("../config/config.yaml")
   @@results_folder_path = Pathname.new(@@config[:blast_path] + @@config[:results_dir])
   
@@ -26,7 +27,7 @@ class BlastHash < Hash
   def read_fasta_file
     fasta_file_path = Pathname.new(@@config[:blast_path] + @@config[:data_dir] + @nc_id + ".fna")
     fasta_txt = ""
-    File.open(f).each do |line|
+    File.open(fasta_file_path).each do |line|
       fasta_txt << line
     end
     fasta_txt

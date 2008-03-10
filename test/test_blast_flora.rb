@@ -10,5 +10,7 @@ class TestBlastFlora < Test::Unit::TestCase
   def test_initialize
     blaster = BlastFlora.new()
     assert_not_nil( blaster.config, "BlastFlora initialization failure, nil config" )
+    blaster.a_bacteria.each {|a| puts a[:nc_id].to_s}
   end
+ 
 end
