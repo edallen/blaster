@@ -47,3 +47,8 @@ blaster.rb basically done
 bacterium.rb bin_human and later methods to write, needs lots of tests
 blast_hash.rb   tests to do
 my_dna.rb tests complete
+blast_flora.rb created from BlastFlora class pulled out of blaster.rb, test file created.
+
+Tasks:
+Start a bacteria.yaml file with example.
+Download genomes.

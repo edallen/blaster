@@ -1,5 +1,7 @@
 #!/usr/local/bin/ruby
 
+# Ed Allen, Stanford Genome Technology Center, 4 March 2008
+
 # Requires of gems & standard library
 require 'rubygems'
 require 'bio'
