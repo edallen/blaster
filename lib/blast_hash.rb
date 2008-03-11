@@ -16,7 +16,7 @@ class BlastHash < Hash
     @hash_count = 0
     @good_count = 0
     @test_seq = MyDNA.new(@whole_seq.slice!(0..39))
-    puts @test_seq
+    puts "First test_seq in blast_hash:  " + @test_seq
     while @whole_seq.length > 20
       if @hash_count > 0 then
         @test_seq = @test_seq[20..39] + @whole_seq.slice!(0..19)

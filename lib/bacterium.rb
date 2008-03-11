@@ -19,46 +19,46 @@ class Bacterium
     @h_blast_candidates_file = ""
   end
   
-  # attr_accessor :nc_id, :genus, :species, :strain, :blast_hash, :bac_results_dir, :h_blast_candidates_file
-  # 
-  # def id_name
-  #   @nc_id + "_" + @genus + "_" + @species + "_" + @strain
-  # end
-  # 
-  # def candidates_file
-  #    @blast_candidates_file = @bac_results_dir + @nc_id + "_blast_candidates.fasta"
-  # end
-  # 
+  attr_accessor :nc_id, :genus, :species, :strain, :blast_hash, :bac_results_dir, :h_blast_candidates_file
+  
+  def id_name
+    @nc_id + "_" + @genus + "_" + @species + "_" + @strain
+  end
+  
+  def candidates_file
+     @blast_candidates_file = @bac_results_dir + @nc_id + "_blast_candidates.fasta"
+  end
+  
   # def make_dir
-  #   # Create the output dir in blast/results/ named for computer and human readability plus timestamp
-  #   #  in case of multiple runs varying conditions.
-  #   begin
-  #     date = `date +%F_%H_%M_%S`
-  #     # keep the dir name in an instance variable for use in other methods
-  #     @bac_results_dir = Pathname.new(@@results_folder_path + id_name() + "_" + date)
-  #     Dir.mkdir(@bac_results_dir)
-  #     @blast_candidates_file = @bac_results_dir + @nc_id + "_blast_candidates.fasta"
-  #   end
-  #   rescue  SystemCallError
-  #     $stderr.print "Failed to create results directory:" + $!
-  #     raise
+  #     # Create the output dir in blast/results/ named for computer and human readability plus timestamp
+  #     #  in case of multiple runs varying conditions.
+  #     begin
+  #       date = `date +%F_%H_%M_%S`
+  #       # keep the dir name in an instance variable for use in other methods
+  #       @bac_results_dir = Pathname.new(@@results_folder_path + id_name() + "_" + date)
+  #       Dir.mkdir(@bac_results_dir)
+  #       @blast_candidates_file = @bac_results_dir + @nc_id + "_blast_candidates.fasta"
+  #     end
+  #     rescue  SystemCallError
+  #       $stderr.print "Failed to create results directory:" + $!
+  #       raise
+  #     end
+  #     
   #   end
   #   
-  # end
-  # 
-  # def blast_human
-  #   # blast against human blast db segments
-  #   # input is @h_blast_candidates_file
-  #   # intermediate blast results file is @blast_results_path
-  #   # outputs are @h_human_bin and @h_blast_candidates (after subtraction of @h_human_bin)
-  #   
-  #   a_hum_ext = @@config[:human_db_exts]
-  #   a_hum_ext.each do |ext|
-  #     db_path = Pathname.new(@@db_folder_path + @@config[:human_db_root] + a_hum_ext)
-  #     `blastall -p blastn -i #{@h_blast_candidates_file}   -d #{db_path} -m 9  > #{@blast_results_path} `
+  #   def blast_human
+  #     # blast against human blast db segments
+  #     # input is @h_blast_candidates_file
+  #     # intermediate blast results file is @blast_results_path
+  #     # outputs are @h_human_bin and @h_blast_candidates (after subtraction of @h_human_bin)
+  #     
+  #     a_hum_ext = @@config[:human_db_exts]
+  #     a_hum_ext.each do |ext|
+  #       db_path = Pathname.new(@@db_folder_path + @@config[:human_db_root] + a_hum_ext)
+  #       `blastall -p blastn -i #{@h_blast_candidates_file}   -d #{db_path} -m 9  > #{@blast_results_path} `
+  #     end
   #   end
-  # end
-  # 
+  
   # def bin_human
   #   # Bin human matches vs non_matched
   #   # PATCHED IN FROM bin_fortymers.rb NEEDS WORK
@@ -122,21 +122,21 @@ class Bacterium
   #   a_not_matched.each{|miss|f.puts ">" + miss; f.puts h_sequences[miss]}
   #   f.close
   # end
-  # def bin_other
-  # end
-  # def bin_genus
-  # end
-  # def bin_species
-  # end
-  # def parse_other
-  #   # read in results file created in #blast_other
-  #   # decide for each input sequence, whether it falls into the other, genus, or species bin
-  #   # call the appropriate bin routine
-  #   
-  # end
-  # def blast_other
-  #   # blast against other blast db segments, output is a results file to parse
-  #   
-  # end
-  # 
+  def bin_other
+  end
+  def bin_genus
+  end
+  def bin_species
+  end
+  def parse_other
+    # read in results file created in #blast_other
+    # decide for each input sequence, whether it falls into the other, genus, or species bin
+    # call the appropriate bin routine
+    
+  end
+  def blast_other
+    # blast against other blast db segments, output is a results file to parse
+    
+  end
+  
 end

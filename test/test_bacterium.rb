@@ -7,17 +7,22 @@ require '../lib/bacterium'
 
 
 class TestBacterium < Test::Unit::TestCase
+  def setup
+     @bac = Bacterium.new("NC_000913","Escherichia","coli","K12")
+  end
+  
+  def teardown
+  end
+  
   def test_initialize
-    bac = Bacterium.new("NC_000913","Escherichia","coli","K12")
-    assert( bac.nc_id = "NC_000913", "incorrect nc_id" )
-    assert( bac.genus = "Escherichia", "incorrect genus" )
-    assert( bac.species = "coli", "incorrect species" )
-    assert( bac.strain = "K12", "incorrect strain" )
+    assert( @bac.nc_id = "NC_000913", "incorrect nc_id" )
+    assert( @bac.genus = "Escherichia", "incorrect genus" )
+    assert( @bac.species = "coli", "incorrect species" )
+    assert( @bac.strain = "K12", "incorrect strain" )
   end
   def test_id_name
-    bac = Bacterium.new("NC_000913","Escherichia","coli","K12")
     # @nc_id + "_" + @genus + "_" + @species + "_" + @strain
-    assert( bac.id_name = "NC_000913_Escherichia_coli_K12", "id_name() is wrong")
+    assert( @bac.id_name = "NC_000913_Escherichia_coli_K12", "id_name() is wrong")
   end
   
   def test_candidates_file
