@@ -1,5 +1,10 @@
 class BlastHash < Hash 
+  # Ruby & gem requires
+  require 'rubygems'
+  require 'bio'
   require 'yaml'
+  # my code requires
+  require 'my_dna'
   @@config = YAML.load_file("../config/config.yaml")
   @@results_folder_path = Pathname.new(@@config[:blast_path] + @@config[:results_dir])
   

@@ -45,10 +45,18 @@ Status:
 
 blaster.rb basically done
 bacterium.rb bin_human and later methods to write, needs lots of tests
-blast_hash.rb   tests to do
+blast_hash.rb   tests to fill in
 my_dna.rb tests complete
-blast_flora.rb created from BlastFlora class pulled out of blaster.rb, test file created.
+blast_flora.rb created from BlastFlora class pulled out of blaster.rb, has some test assertions, could use more.
+Fixed several scoping bugs related to classes needing require statements, attr_accessors and formatting of some references.
+Might look in later and see if attr_accessors can be trimmed back to attr_readers
+
+Installed blast and dbs on laptop for use in testing
+Installed git on sgtc-rails
+copied project over to sgtc-rails using git
 
 Tasks:
-Start a bacteria.yaml file with example.
-Download genomes.
+Download genomes
+Fill in bacteria.yaml
+Finish blast_flora
+Flesh out other tests
