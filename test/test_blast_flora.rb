@@ -1,5 +1,5 @@
 #!/usr/local/bin/ruby
-# test_my_dna.rb
+# test_blast_flora.rb
 require 'rubygems'
 require 'bio'
 require 'yaml'

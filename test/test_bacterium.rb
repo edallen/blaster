@@ -22,28 +22,18 @@ class TestBacterium < Test::Unit::TestCase
   end
   def test_id_name
     # @nc_id + "_" + @genus + "_" + @species + "_" + @strain
-    assert( @bac.id_name = "NC_000913_Escherichia_coli_K12", "id_name() is wrong")
+    assert_equal( @bac.id_name, "NC_000913_Escherichia_coli_K12", "id_name() is wrong")
   end
   
-  def test_candidates_file
+  def test_set_blast_candidate_file_name
      #@blast_candidates_file = @bac_results_dir + @nc_id + "_blast_candidates.fasta"
   end
   
   def test_make_dir
-    # # Create the output dir in blast/results/ named for computer and human readability plus timestamp
-    #     #  in case of multiple runs varying conditions.
-    #     begin
-    #       date = `date +%F_%H_%M_%S`
-    #       # keep the dir name in an instance variable for use in other methods
-    #       @bac_results_dir = Pathname.new(@@results_folder_path + id_name() + "_" + date)
-    #       Dir.mkdir(@bac_results_dir)
-    #       @blast_candidates_file = @bac_results_dir + @nc_id + "_blast_candidates.fasta"
-    #     end
-    #     rescue  SystemCallError
-    #       $stderr.print "Failed to create results directory:" + $!
-    #       raise
-    #     end
-    #     
+    @bac.make_dir()
+    assert(File.exist?(@bac_results_dir), "Didn't find dir #{@bac_results_dir}")
+    assert(File.directory?(@bac_results_dir), "File #{@bac_results_dir} is not a directory.")
   end
+  
 end
 
