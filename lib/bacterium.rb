@@ -9,14 +9,14 @@ class Bacterium
   @@results_folder_path = Pathname.new(@@config[:blast_path] + @@config[:results_dir])
   @@db_folder_path = Pathname.new(@@config[:blast_path] + @@config[:db_dir])
   
-  def initialize(nc_id,genus,species,strain)
+  def initialize(nc_id,genus,species,strain,fill)
     @nc_id = nc_id
     @genus = genus
     @species = species
     @strain = strain
     # The next step takes much longer than it looks, since it makes the fortymers and screens them.
     @blast_hash = BlastHash.new(@nc_id)
-    @blast_hash.fill()
+    @blast_hash.fill() if fill == true
     @bac_results_dir =""
     @h_blast_candidates_file = ""
     @blast_results_path = ""
@@ -30,7 +30,7 @@ class Bacterium
   attr_accessor :h_blast_candidates_file, :blast_results_path, :date, :human_match_path, :no_human_match_path
   
   def id_name
-    @nc_id + "_" + @genus + "_" + @species + "_" + @strain
+    id_name = "" << @nc_id << "_" << @genus[0,1] << "_" << @species << "_" << @strain
   end
 
   def set_blast_candidate_file_name
@@ -41,10 +41,14 @@ class Bacterium
     # Create the output dir in blast/results/ named for computer and human readability plus timestamp
     #  in case of multiple runs varying conditions.
     begin
-      @date = `date +%F_%H_%M_%S`
+      #@date = `date +%F_%H_%M_%S`.chomp
+      @date = `date +%F`.chomp
       # keep the dir name in an instance variable for use in other methods
-      @bac_results_dir = Pathname.new(@@results_folder_path + id_name() + "_" + @date + "/")
-      Dir.mkdir(@bac_results_dir)
+      @bac_results_dir = Pathname.new(@@results_folder_path.to_s + self.id_name() + "_" + @date + "/")
+      puts "bac results dir: #{@bac_results_dir}"
+      if ! File.exist?(@bac_results_dir)
+        Dir.mkdir(@bac_results_dir)
+      end
     rescue  SystemCallError
       $stderr.print "Failed to create results directory:" + $!
       raise

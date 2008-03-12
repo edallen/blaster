@@ -8,12 +8,12 @@ require '../lib/bacterium'
 
 class TestBacterium < Test::Unit::TestCase
   def setup
-     @bac = Bacterium.new("NC_000913","Escherichia","coli","K12")
+    @bac = Bacterium.new("NC_000913","Escherichia","coli","K12", false)
   end
-  
+
   def teardown
   end
-  
+
   def test_initialize
     assert( @bac.nc_id = "NC_000913", "incorrect nc_id" )
     assert( @bac.genus = "Escherichia", "incorrect genus" )
@@ -22,17 +22,17 @@ class TestBacterium < Test::Unit::TestCase
   end
   def test_id_name
     # @nc_id + "_" + @genus + "_" + @species + "_" + @strain
-    assert_equal( @bac.id_name, "NC_000913_Escherichia_coli_K12", "id_name() is wrong")
+    assert_equal( @bac.id_name, "NC_000913_E_coli_K12", "id_name() is wrong")
   end
-  
+
   def test_set_blast_candidate_file_name
-     #@blast_candidates_file = @bac_results_dir + @nc_id + "_blast_candidates.fasta"
+    #@blast_candidates_file = @bac_results_dir + @nc_id + "_blast_candidates.fasta"
   end
-  
+
   def test_make_dir
     @bac.make_dir()
-    assert(File.exist?(@bac_results_dir), "Didn't find dir #{@bac_results_dir}")
-    assert(File.directory?(@bac_results_dir), "File #{@bac_results_dir} is not a directory.")
+    assert(File.exist?(@bac.bac_results_dir), "Didn't find dir #{@bac.bac_results_dir}")
+    assert(File.directory?(@bac.bac_results_dir), "File #{@bac.bac_results_dir} is not a directory.")
   end
   
 end
