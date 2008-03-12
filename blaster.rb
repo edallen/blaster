@@ -15,8 +15,6 @@ require 'blast_flora'
 require 'blast_hash'
 require 'bacterium'
 
-
-
 blaster = BlastFlora.new()
 puts "made a BlastFlora object"
 # Iterate over a_bacteria, making a Bacterium object for each, and telling it to blast itself

@@ -12,7 +12,7 @@ class Bacterium
   def initialize(nc_id,genus,species,strain,fill)
     @blast_results_path = ""
     @date = ""
-    @h_blast_candidates_file = ""
+    @blast_candidates_file = ""
     @human_match_path = ""
     @no_human_match_path = ""
     @nc_id = nc_id
@@ -41,7 +41,7 @@ class Bacterium
   end
 
   def set_blast_candidate_file_name
-    @blast_candidates_file = @bac_results_dir + @nc_id + "_blast_candidates.fasta"
+    @blast_candidates_file = @bac_results_dir + "#{@nc_id}_blast_candidates.fasta"
   end
 
   def make_dir
@@ -60,15 +60,18 @@ class Bacterium
   
   def blast_human
     # blast against human blast db segments
-    # input is @h_blast_candidates_file
+    # input is @blast_candidates_file
     # intermediate blast results file is @blast_results_path
     # outputs are @h_human_bin and @h_blast_candidates (after subtraction of @h_human_bin)
-    @blast_results_path
+    @blast_results_path = @bac_results_dir + "#{@nc_id}_blast_results_human.txt"
+    File.unlink(@blast_results_path) if File.exist?(@blast_results_path)
+    `touch #{@blast_results_path}`
     a_hum_ext = @@config[:human_db_exts]
     a_hum_ext.each do |ext|
       human_db_file = "#{@@config[:human_db_root]}#{ext}"
       db_path = Pathname.new("" << @@db_folder_path + human_db_file)
-      `blastall -p blastn -i #{@h_blast_candidates_file}   -d #{db_path} -m 9  > #{@blast_results_path} `
+      `blastall -p blastn -i #{@blast_candidates_file }   -d #{db_path} -m 9  >> #{@blast_results_path} `
+      puts "Blasted #{@blast_candidates_file } against #{db_path}"
     end
   end
   
