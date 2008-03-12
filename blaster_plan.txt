@@ -55,6 +55,8 @@ Installed blast and dbs on laptop for use in testing
 Installed git on sgtc-rails
 copied project over to sgtc-rails using git
 
+3/12/08 bug fixing and running to test - got it running blaster.rb up to first blast results, including dir creation and file generation
+
 Tasks:
 Download genomes
 Fill in bacteria.yaml
