@@ -27,7 +27,7 @@ blaster.a_bacteria.each do |b|
   puts "made directory"
   bac.set_blast_candidate_file_name()
   puts "set candidate file name"
-  bac.blast_hash.write_to_fasta(bac_dir,bac.nc_id)
+  bac.blast_hash.write_to_fasta(bac.bac_results_dir,bac.nc_id)
   puts "wrote out candidates file"
   bac.blast_human()
   puts "blasted against human DB"

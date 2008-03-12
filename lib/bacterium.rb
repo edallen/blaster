@@ -10,24 +10,31 @@ class Bacterium
   @@db_folder_path = Pathname.new(@@config[:blast_path] + @@config[:db_dir])
   
   def initialize(nc_id,genus,species,strain,fill)
+    @blast_results_path = ""
+    @date = ""
+    @h_blast_candidates_file = ""
+    @human_match_path = ""
+    @no_human_match_path = ""
     @nc_id = nc_id
     @genus = genus
     @species = species
     @strain = strain
     # The next step takes much longer than it looks, since it makes the fortymers and screens them.
-    @blast_hash = BlastHash.new(@nc_id)
+    self.set_dir_name()
+    @blast_hash = BlastHash.new(@nc_id,@bac_results_dir)
     @blast_hash.fill() if fill == true
-    @bac_results_dir =""
-    @h_blast_candidates_file = ""
-    @blast_results_path = ""
-    @date = ""
-    @human_match_path = ""
-    @no_human_match_path = ""
     puts "Bacterium initialized"
   end
   
   attr_accessor :nc_id, :genus, :species, :strain, :blast_hash, :bac_results_dir
   attr_accessor :h_blast_candidates_file, :blast_results_path, :date, :human_match_path, :no_human_match_path
+  
+  def set_dir_name
+    #@date = `date +%F_%H_%M_%S`.chomp
+    @date = `date +%F`.chomp
+    # keep the dir name in an instance variable for use in other methods
+    @bac_results_dir = Pathname.new(@@results_folder_path.to_s + self.id_name() + "_" + @date + "/")
+  end
   
   def id_name
     id_name = "" << @nc_id << "_" << @genus[0,1] << "_" << @species << "_" << @strain
@@ -41,10 +48,6 @@ class Bacterium
     # Create the output dir in blast/results/ named for computer and human readability plus timestamp
     #  in case of multiple runs varying conditions.
     begin
-      #@date = `date +%F_%H_%M_%S`.chomp
-      @date = `date +%F`.chomp
-      # keep the dir name in an instance variable for use in other methods
-      @bac_results_dir = Pathname.new(@@results_folder_path.to_s + self.id_name() + "_" + @date + "/")
       puts "bac results dir: #{@bac_results_dir}"
       if ! File.exist?(@bac_results_dir)
         Dir.mkdir(@bac_results_dir)
@@ -53,11 +56,8 @@ class Bacterium
       $stderr.print "Failed to create results directory:" + $!
       raise
     end
-
   end
   
-
-
   def blast_human
     # blast against human blast db segments
     # input is @h_blast_candidates_file
@@ -66,7 +66,8 @@ class Bacterium
     @blast_results_path
     a_hum_ext = @@config[:human_db_exts]
     a_hum_ext.each do |ext|
-      db_path = Pathname.new(@@db_folder_path + @@config[:human_db_root] + a_hum_ext)
+      human_db_file = "#{@@config[:human_db_root]}#{ext}"
+      db_path = Pathname.new("" << @@db_folder_path + human_db_file)
       `blastall -p blastn -i #{@h_blast_candidates_file}   -d #{db_path} -m 9  > #{@blast_results_path} `
     end
   end
@@ -128,18 +129,23 @@ class Bacterium
     a_not_matched.each{|miss|f.puts ">" + miss; f.puts h_sequences[miss]}
     f.close
   end
+  
   def bin_other
   end
+  
   def bin_genus
   end
+  
   def bin_species
   end
+  
   def parse_other
     # read in results file created in #blast_other
     # decide for each input sequence, whether it falls into the other, genus, or species bin
     # call the appropriate bin routine
     
   end
+  
   def blast_other
     # blast against other blast db segments, output is a results file to parse
     

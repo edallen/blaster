@@ -9,9 +9,9 @@ class BlastHash < Hash
   @@config = YAML.load_file(config_path)
   @@results_folder_path = Pathname.new(@@config[:blast_path] + @@config[:results_dir])
   
-  def initialize(nc_id)
+  def initialize(nc_id,bac_results_folder)
     @nc_id = nc_id
-    @yaml_path = Pathname.new(@@results_folder_path + @nc_id + "_blast_hash.yaml")
+    @yaml_path = Pathname.new(bac_results_folder + "#{@nc_id}_blast_hash.yaml")
   end
   
   def fill
@@ -39,7 +39,7 @@ class BlastHash < Hash
       end
       hash_count = hash_count + 1
       if test_seq.pass_all_screens?
-        good_count = @good_count + 1
+        good_count = good_count + 1
         self[hash_count] = test_seq
       end
     end
@@ -63,9 +63,9 @@ class BlastHash < Hash
   
   def write_to_fasta(bac_dir,nc_id)
     # NEED TO NAME OUTFILE
-    @fasta_out_file = bac_dir + nc_id + "_blast_candidates.fasta"
+    @fasta_out_file = bac_dir + "#{nc_id}_blast_candidates.fasta"
     out_file = File.open(@fasta_out_file,"w")
-    self.each{|fas_key,fas_seq| outfile.puts ">" << fas_key; outfile.puts fas_seq }
+    self.each{|fas_key,fas_seq| out_file.puts ">#{nc_id}_" << fas_key.to_s; out_file.puts fas_seq }
     puts 'wrote fasta file'
     out_file.close()
   end
