@@ -1,5 +1,6 @@
 class Bacterium
   require 'yaml'
+  require 'pathname'
   
   require 'blast_hash'
   

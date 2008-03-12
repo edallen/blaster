@@ -1,5 +1,6 @@
 class BlastFlora 
   require 'yaml'
+  require 'pathname'
   
   def initialize
     config_path = File.expand_path(File.dirname(__FILE__) + "/../config/config.yaml")

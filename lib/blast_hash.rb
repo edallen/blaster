@@ -3,6 +3,8 @@ class BlastHash < Hash
   require 'rubygems'
   require 'bio'
   require 'yaml'
+  require 'pathname'
+  
   # my code requires
   require 'my_dna'
   config_path = File.expand_path(File.dirname(__FILE__) + "/../config/config.yaml")
