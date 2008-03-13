@@ -67,19 +67,32 @@ class Bacterium
   
   def blast_human
     # blast against human blast db segments
-    # input is @blast_candidates_file
-    # intermediate blast results file is @blast_results_path
-    # outputs are @h_human_bin and @h_blast_candidates (after subtraction of @h_human_bin)
     @blast_results_path = @bac_results_dir + "#{@nc_id}_blast_results_human.txt"
-    File.unlink(@blast_results_path) if File.exist?(@blast_results_path)
-    `touch #{@blast_results_path}`
+    self.clear_blast_results_file
     a_hum_ext = @@config[:human_db_exts]
     a_hum_ext.each do |ext|
-      human_db_file = "#{@@config[:human_db_root]}#{ext}"
-      db_path = Pathname.new("" << @@db_folder_path + human_db_file)
-      `blastall -p blastn -i #{@blast_candidates_file }   -d #{db_path} -m 9  >> #{@blast_results_path} `
-      puts "Blasted #{@blast_candidates_file } against #{db_path}"
+      @db_file = "#{@@config[:human_db_root]}#{ext}"
+      self.blast(@blast_candidates_file)
     end
+  end
+  
+  def blast_other
+     # blast against other blast db, output is a results file to parse
+     @blast_results_path = @bac_results_dir + "#{@nc_id}_blast_results_other.txt"
+     @db_file = "#{@@config[:other_db_root]}"
+     self.clear_blast_results_file
+     self.blast(@no_human_match_path)
+  end
+  
+  def clear_blast_results_file
+    File.unlink(@blast_results_path) if File.exist?(@blast_results_path)
+    `touch #{@blast_results_path}`
+  end
+   
+  def blast (file_to_blast)
+    @db_path = Pathname.new("" << @@db_folder_path + @db_file)
+    `blastall -p blastn -i #{file_to_blast }   -d #{@db_path} -m 9  >> #{@blast_results_path} `
+    puts "Blasted #{file_to_blast} against #{@db_path}"
   end
   
   def bin_human
@@ -140,6 +153,8 @@ class Bacterium
     f.close
   end
   
+  
+   
   def bin_other
   end
   
@@ -156,9 +171,6 @@ class Bacterium
     
   end
   
-  def blast_other
-    # blast against other blast db segments, output is a results file to parse
-    
-  end
+ 
 
 end

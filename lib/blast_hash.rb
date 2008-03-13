@@ -5,7 +5,7 @@ class BlastHash < Hash
   require 'yaml'
   require 'pathname'
   
-  # my code requires
+  # blaster project requires
   require 'my_dna'
   config_path = File.expand_path(File.dirname(__FILE__) + "/../config/config.yaml")
   @@config = YAML.load_file(config_path)
