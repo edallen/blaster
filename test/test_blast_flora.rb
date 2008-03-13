@@ -1,9 +1,13 @@
 #!/usr/local/bin/ruby
 # test_blast_flora.rb
+
+# Ruby library & gem requires
 require 'rubygems'
 require 'bio'
 require 'yaml'
 require 'test/unit'
+
+# blaster project requires
 require '../lib/blast_flora'
 
 class TestBlastFlora < Test::Unit::TestCase

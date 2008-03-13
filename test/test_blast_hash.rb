@@ -1,8 +1,12 @@
 #!/usr/local/bin/ruby
 # test_blast_hash.rb
+
+# Ruby library & gem requires
 require 'rubygems'
 require 'bio'
 require 'test/unit'
+
+# blaster project requires
 require '../lib/blast_hash'
 
 class TestBlastHash < Test::Unit::TestCase

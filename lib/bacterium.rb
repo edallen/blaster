@@ -1,7 +1,8 @@
 class Bacterium
+  # Ruby library & gem requires
   require 'yaml'
   require 'pathname'
-  
+  # blaster project requires
   require 'blast_hash'
   
   config_path = File.expand_path(File.dirname(__FILE__) + "/../config/config.yaml")
@@ -22,6 +23,7 @@ class Bacterium
     @strain = strain
     # The next step takes much longer than it looks, since it makes the fortymers and screens them.
     self.set_dir_name()
+    self.make_dir()
     @blast_hash = BlastHash.new(@nc_id,@bac_results_dir)
     @blast_hash.fill() if fill == true
     puts "Bacterium initialized"
@@ -51,12 +53,16 @@ class Bacterium
     begin
       puts "bac results dir: #{@bac_results_dir}"
       if ! File.exist?(@bac_results_dir)
-        Dir.mkdir(@bac_results_dir)
+         puts "Making directory  #{@bac_results_dir} ."
+         Dir.mkdir(@bac_results_dir)
+      else
+        puts "Directory  #{@bac_results_dir} exists."
       end
     rescue  SystemCallError
       $stderr.print "Failed to create results directory:" + $!
       raise
     end
+    
   end
   
   def blast_human

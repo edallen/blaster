@@ -1,4 +1,5 @@
 class BlastFlora 
+  # Ruby library & gem requires
   require 'yaml'
   require 'pathname'
   
