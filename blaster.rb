@@ -21,8 +21,8 @@ puts "made a BlastFlora object"
 blaster.a_bacteria.each do |b|
   bac = Bacterium.new(b[:nc_id],b[:genus],b[:species],b[:strain], true)
   puts "made Bacterium for #{b[:nc_id]} #{b[:genus]} #{b[:species]} #{b[:strain]}"
-  bac_dir = bac.make_dir()
-  puts "made directory"
+  # bac_dir = bac.make_dir()
+  # puts "made directory"
   bac.set_blast_candidate_file_name()
   puts "set candidate file name"
   bac.blast_hash.write_to_fasta(bac.bac_results_dir,bac.nc_id)
