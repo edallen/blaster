@@ -1,8 +1,12 @@
 #!/usr/local/bin/ruby
 # test_my_dna.rb
+
+# Ruby library & gem requires
 require 'rubygems'
 require 'bio'
 require 'test/unit'
+
+# blaster project requires
 require '../lib/my_dna'
 
 class TestMyDNA < Test::Unit::TestCase

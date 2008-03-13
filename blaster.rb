@@ -4,12 +4,12 @@
 #First scratch partial version Feb 20, 2008
 
 $: << File.expand_path(File.dirname(__FILE__) + "/./lib")
-# Requires of gems & standard library
+# # Ruby library & gem requires
 require 'rubygems'
 require 'bio'
 require 'yaml'
 
-# Requires of my own code
+# Blaster project requires
 require 'my_dna'
 require 'blast_flora'
 require 'blast_hash'

@@ -1,7 +1,8 @@
 class Bacterium
+  # Ruby library & gem requires
   require 'yaml'
   require 'pathname'
-  
+  # blaster project requires
   require 'blast_hash'
   
   config_path = File.expand_path(File.dirname(__FILE__) + "/../config/config.yaml")

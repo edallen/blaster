@@ -1,5 +1,5 @@
 class BlastHash < Hash 
-  # Ruby & gem requires
+  # Ruby library & gem requires
   require 'rubygems'
   require 'bio'
   require 'yaml'
