@@ -97,8 +97,8 @@ class Bacterium
   
   def bin_human
     # Bin human matches vs non_matched
-    @human_match_path = @bac_results_dir + "matched_#{@nc_id}"
-    @no_human_match_path = @bac_results_dir + "unmatched_#{@nc_id}"
+    @human_match_path = @bac_results_dir + "human_matched_#{@nc_id}"
+    @no_human_match_path = @bac_results_dir + "human_unmatched_#{@nc_id}"
 
     # Read in 40mers list. Build array of names, and hash of {name=>sequence}.
     f = File.open(@blast_candidates_file ,"r")
@@ -144,11 +144,11 @@ class Bacterium
     puts "Number of 40mers showing hits: " + a_query_hits.length.to_s
     puts "Number of 40mers not matched: " + a_not_matched.length.to_s
 
-    f = File.open(match_path, "w")
+    f = File.open(@human_match_path, "w")
     a_query_hits.each{|hit|f.puts ">" + hit; f.puts h_sequences[hit]}
     f.close
 
-    f = File.open(no_match_path, "w")
+    f = File.open(@no_human_match_path, "w")
     a_not_matched.each{|miss|f.puts ">" + miss; f.puts h_sequences[miss]}
     f.close
   end
