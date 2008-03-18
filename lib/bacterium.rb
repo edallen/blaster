@@ -2,6 +2,8 @@ class Bacterium
   # Ruby library & gem requires
   require 'yaml'
   require 'pathname'
+  require 'rexml/document'
+  include REXML
   # blaster project requires
   require 'blast_hash'
   
@@ -10,7 +12,8 @@ class Bacterium
   @@data_folder_path = Pathname.new(@@config[:blast_path] + @@config[:data_dir])
   @@results_folder_path = Pathname.new(@@config[:blast_path] + @@config[:results_dir])
   @@db_folder_path = Pathname.new(@@config[:blast_path] + @@config[:db_dir])
-  
+  @@human_format = "9"
+  @@other_format = "7"
   def initialize(nc_id,genus,species,strain,fill)
     @blast_results_path = ""
     @date = ""
@@ -72,7 +75,7 @@ class Bacterium
     a_hum_ext = @@config[:human_db_exts]
     a_hum_ext.each do |ext|
       @db_file = "#{@@config[:human_db_root]}#{ext}"
-      self.blast(@blast_candidates_file)
+      self.blast(@blast_candidates_file,@@human_format)
     end
   end
   
@@ -81,7 +84,7 @@ class Bacterium
      @blast_results_path = @bac_results_dir + "#{@nc_id}_blast_results_other.txt"
      @db_file = "#{@@config[:other_db_root]}"
      self.clear_blast_results_file
-     self.blast(@no_human_match_path)
+     self.blast(@no_human_match_path,@@other_format)
   end
   
   def clear_blast_results_file
@@ -89,9 +92,9 @@ class Bacterium
     `touch #{@blast_results_path}`
   end
    
-  def blast (file_to_blast)
+  def blast (file_to_blast, format)
     @db_path = Pathname.new("" << @@db_folder_path + @db_file)
-    `blastall -p blastn -i #{file_to_blast }   -d #{@db_path} -m 9  >> #{@blast_results_path} `
+    `blastall -p blastn -i #{file_to_blast }   -d #{@db_path} -m #{format}  >> #{@blast_results_path} `
     puts "Blasted #{file_to_blast} against #{@db_path}"
   end
   
@@ -114,17 +117,16 @@ class Bacterium
     file_data.each do |line| 
       # ID line or sequence line? Hash is keyed by IDs with sequence in values.
       md = regex.match(line)
-      if $1 != nil then
-        #puts $1
-        a_ids << $1
-        key = $1
+      if md != nil then
+        a_ids << md[0]
+        key = md[0]
       else
         value = line.chomp
         h_sequences[key] = value
       end
     end
     #a_ids.each{|id| puts id}
-
+    
     a_query_hits = []
     query_regex = /#\sQuery:\s(\S*)$/ 
     File.open(@blast_results_path) do |file|
