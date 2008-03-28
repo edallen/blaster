@@ -167,12 +167,13 @@ class Bacterium
   end
   
   def parse_other
+    file = File.new( @blast_results_path )
+    #doc = Document.new file
+    #doc.elements.each("BlastOutput") { |element| puts element.attributes["name"] }
     # read in results file created in #blast_other
     # decide for each input sequence, whether it falls into the other, genus, or species bin
     # call the appropriate bin routine
-    
+    Document.parse_stream(file, BlastListener.new(@genus,@species))
   end
   
- 
-
-end
+end  
