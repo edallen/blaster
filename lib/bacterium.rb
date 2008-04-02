@@ -6,6 +6,7 @@ class Bacterium
   include REXML
   # blaster project requires
   require 'blast_hash'
+  require 'blast_listener'
   
   config_path = File.expand_path(File.dirname(__FILE__) + "/../config/config.yaml")
   @@config = YAML.load_file(config_path)
@@ -155,17 +156,6 @@ class Bacterium
     f.close
   end
   
-  
-   
-  def bin_other
-  end
-  
-  def bin_genus
-  end
-  
-  def bin_species
-  end
-  
   def parse_other
     file = File.new( @blast_results_path )
     #doc = Document.new file
@@ -173,7 +163,7 @@ class Bacterium
     # read in results file created in #blast_other
     # decide for each input sequence, whether it falls into the other, genus, or species bin
     # call the appropriate bin routine
-    Document.parse_stream(file, BlastListener.new(@genus,@species))
+    Document.parse_stream(file, BlastListener.new(@genus,@species,@ncid,@bac_results_dir))
   end
   
 end  
