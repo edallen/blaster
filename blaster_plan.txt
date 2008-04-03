@@ -38,8 +38,8 @@ Place bacteria.yaml file containing formatted list of bacteria to run into data 
 Check and possibly edit config.yaml for conditions
 Change directory (cd) to blast/bin/blaster
 Run the program with "./blaster.rb"
-Observe progress by using tail on the log or possibly have some command line feedback.
-When it completes, check the log file for the run and examine bin files.
+Observe progress by using tail on the blast results files & reading command line feedback.
+When it completes, examine bin files in the results folders.
 
 Status:
 
@@ -60,5 +60,5 @@ copied project over to sgtc-rails using git
 Tasks:
 Download genomes
 Fill in bacteria.yaml
-Finish blast_flora
+Parse the "other" blast results
 Flesh out other tests

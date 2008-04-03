@@ -35,5 +35,31 @@ class TestBacterium < Test::Unit::TestCase
     assert(File.directory?(@bac.bac_results_dir), "File #{@bac.bac_results_dir} is not a directory.")
   end
   
+  def test_blast_other
+     # # blast against other blast db segments, output is a results file to parse
+     #      @blast_results_path = @bac_results_dir + "#{@nc_id}_blast_results_other.txt"
+     #      @db_file = "#{@@config[:other_db_root]}"
+     #      self.clear_blast_results_file
+     #      self.blast
+  end
+  
+  def test_clear_blast_results_file
+    # File.unlink(@blast_results_path) if File.exist?(@blast_results_path)
+    #    `touch #{@blast_results_path}`
+  end
+   
+  def test_blast
+    # @db_path = Pathname.new("" << @@db_folder_path + @db_file)
+    #    `blastall -p blastn -i #{@blast_candidates_file }   -d #{db_path} -m 9  >> #{@blast_results_path} `
+    #    puts "Blasted #{@blast_candidates_file} against #{@db_path}"
+  end
+  
+  def test_bin_human
+  
+  end
+  def test_bin_other
+
+  end
+  
 end
 
