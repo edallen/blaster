@@ -7,6 +7,9 @@ class BlastListener
   def initialize(genus,species,ncid,bac_dir)
       @genus = genus
       @species = species
+      @ncid = ncid
+      @bac_dir = bac_dir
+      
       @target = "Iter_num"
       @iteration = []
       @iter_num = 0
@@ -14,6 +17,10 @@ class BlastListener
       @hit_def = ""
       @score = ""
       @evalue = ""
+      @a_species_matches = []
+      @a_genus_matches = []
+      @a_other_matches = []
+      @h_sequences = {}
   end
   def reset
     # an we dry this up by combining with #initialize in some way
@@ -52,6 +59,10 @@ class BlastListener
       if name == "Hsp_evalue" then
         @target = "Hsp_evalue_value"
       end
+     elsif @target == "Hsp_qseq" then
+        if name == "Hsp_qseq" then
+          @target = "Hsp_qseq_value"
+        end
     end
   end
   
@@ -76,7 +87,8 @@ class BlastListener
       @iteration_query_def = tag_text
       @target = "Hit_num"
     elsif @target == "Hit_num_value" then
-      @hit_num = tag_text
+      @hit_num = (tag_text.to_i) -1
+      puts "@hit_num: #{@hit_num}"
       @target = "Hit_def"
     elsif @target == "Hit_def_value" then
       @hit_def = tag_text
@@ -87,47 +99,65 @@ class BlastListener
     elsif @target == "Hsp_evalue_value" then
       @evalue = tag_text
       @iteration[@hit_num] = [@hit_def,@score,@evalue]
-      puts "@hit_def: #{@hit_def}, @score: #{@score}, @evalue: #{@evalue}, @hit_num: #{@hit_num}"
-      @target = "Hit_def"
+      puts "@hit_def: #{@hit_def}, @score: #{@score}, @evalue: #{@evalue}, @hit_num: #{@hit_num.to_s}"
+      @target = "Hsp_qseq"
+    elsif @target == "Hsp_qseq_value"
+     
+      @target = "Hit_num"
     end
   end
 
   def bin 
     # Doing simplest possible initial binning attempt, not evaluating score or evalue, just binning as a bad match if
     # not matched to both genus and species
-    a_species = []
-    a_genus = []
-    a_other = []
-    genus_reg = Regexp.new("^|\s#{@genus}\s")
+    puts "@genus going into regex: #{@genus}"
+    puts "@species going into regex: #{@species}"
+    genus_reg = Regexp.new("^#{@genus}\s")
+    puts "genus_reg : #{genus_reg.to_s}"
     species_reg = Regexp.new("\s#{@species}\s")
-    genus_match = true
-    species_match = true
+    puts "species_reg : #{species_reg.to_s}"
+    
+    other_match = false
+    genus_match = false
+    species_match = false
     @iteration.each do |i|
-      puts "i in iteration.each: " + i
       hit_def = i[0]
       if hit_def =~ genus_reg then
         if hit_def =~ species_reg then
           # do nothing - genus_match defaults to true
+          species_match = true
+          genus_match = true
         else
-          species_match = false
+          genus_match = true
         end
       else
-        genus_match = false
+         other_match = true
       end
     end
-    if species_match then
+    if other_match then
+      # add to other list
+      @a_other_matches<< @iteration_query_def
+      puts @iteration_query_def + " added to other matches list"
+    elsif species_match then
       # add to species list
-      a_species<< @iteration_query_def
+      @a_species_matches<< @iteration_query_def
       puts @iteration_query_def + " added to species list"
     elsif genus_match then
       # add to genus list
-      a_genus<< @iteration_query_def
+      @a_genus_matches<< @iteration_query_def
       puts @iteration_query_def + " added to genus list"
     else
-      # add to other list
-      a_other<< @iteration_query_def
-      puts @iteration_query_def + " added to other matches list"
+      # do a no_matches list???
     end
+    f = File.open("#{@bac_dir}/#{@ncid}_species_matches", "w")
+    @a_species_matches.each{|hit|f.puts ">" + hit}
+    f.close
+    f = File.open("#{@bac_dir}/#{@ncid}_genus_matches", "w")
+    @a_genus_matches.each{|hit|f.puts ">" + hit}
+    f.close
+    f = File.open("#{@bac_dir}/#{@ncid}_other_matches", "w")
+    @a_other_matches.each{|hit|f.puts ">" + hit}
+    f.close
   end
   
 end
