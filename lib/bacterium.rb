@@ -164,7 +164,16 @@ class Bacterium
     # decide for each input sequence, whether it falls into the other, genus, or species bin
     # call the appropriate bin routine
     listener = BlastListener.new(@genus,@species,@ncid,@bac_results_dir)
-    Document.parse_stream(file, listener)
+    Document.parse_stream(file, listener) 
+    f = File.open("#{@bac_dir}/#{@ncid}_species_matches", "w")
+          listener.species.each{|hit|f.puts hit}
+    f.close
+    f = File.open("#{@bac_dir}/#{@ncid}_genus_matches", "w")
+          listener.genus.each{|hit|f.puts hit}
+    f.close
+    f = File.open("#{@bac_dir}/#{@ncid}_other_matches", "w")
+          listener.other.each{|hit|f.puts hit}
+    f.close
   end
   
 end  
