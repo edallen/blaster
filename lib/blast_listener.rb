@@ -102,7 +102,7 @@ class BlastListener
       puts "@hit_def: #{@hit_def}, @score: #{@score}, @evalue: #{@evalue}, @hit_num: #{@hit_num.to_s}"
       @target = "Hsp_qseq"
     elsif @target == "Hsp_qseq_value"
-     
+      #line deleted since this is by match length and not necessarily the full 40, so not too useful to me
       @target = "Hit_num"
     end
   end
@@ -120,7 +120,9 @@ class BlastListener
     other_match = false
     genus_match = false
     species_match = false
+    hit_hold = ""
     @iteration.each do |i|
+      #How it was stored in #text:    @iteration[@hit_num] = [@hit_def,@score,@evalue]
       hit_def = i[0]
       if hit_def =~ genus_reg then
         if hit_def =~ species_reg then
@@ -131,12 +133,17 @@ class BlastListener
           genus_match = true
         end
       else
-         other_match = true
+        if hit_hold == "" then
+          hit_hold = hit_def
+          #
+          if i[2]  < 1.0
+            other_match = true
+          end 
+        end
       end
-    end
     if other_match then
       # add to other list
-      @a_other_matches<< @iteration_query_def
+      @a_other_matches<< @iteration_query_def + "\t" + hit_hold
       puts @iteration_query_def + " added to other matches list"
     elsif species_match then
       # add to species list
@@ -149,15 +156,27 @@ class BlastListener
     else
       # do a no_matches list???
     end
-    f = File.open("#{@bac_dir}/#{@ncid}_species_matches", "w")
-    @a_species_matches.each{|hit|f.puts ">" + hit}
-    f.close
-    f = File.open("#{@bac_dir}/#{@ncid}_genus_matches", "w")
-    @a_genus_matches.each{|hit|f.puts ">" + hit}
-    f.close
-    f = File.open("#{@bac_dir}/#{@ncid}_other_matches", "w")
-    @a_other_matches.each{|hit|f.puts ">" + hit}
-    f.close
+    # f = File.open("#{@bac_dir}/#{@ncid}_species_matches", "w")
+    #     @a_species_matches.each{|hit|f.puts ">" + hit}
+    #     f.close
+    #     f = File.open("#{@bac_dir}/#{@ncid}_genus_matches", "w")
+    #     @a_genus_matches.each{|hit|f.puts ">" + hit}
+    #     f.close
+    #     f = File.open("#{@bac_dir}/#{@ncid}_other_matches", "w")
+    #     @a_other_matches.each{|hit|f.puts ">" + hit}
+    #     f.close
+  end
+  
+  def species_matches
+    @a_species_matches
+  end
+  
+  def genus_matches
+    @a_genus_matches
+  end
+  
+  def other_matches
+    @a_other_matches
   end
   
 end
