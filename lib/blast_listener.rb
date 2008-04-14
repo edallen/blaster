@@ -5,34 +5,34 @@ include REXML
 class BlastListener
   include StreamListener
   def initialize(genus,species,ncid,bac_dir)
-      @genus = genus
-      @species = species
-      @ncid = ncid
-      @bac_dir = bac_dir
-      
-      @target = "Iter_num"
-      @iteration = []
-      @iter_num = 0
-      @iteration_query_def = ""
-      @hit_def = ""
-      @score = ""
-      @evalue = ""
-      @a_species_matches = []
-      @a_genus_matches = []
-      @a_other_matches = []
-      @h_sequences = {}
+    @genus = genus
+    @species = species
+    @ncid = ncid
+    @bac_dir = bac_dir
+
+    @target = "Iter_num"
+    @iteration = []
+    @iter_num = 0
+    @iteration_query_def = ""
+    @hit_def = ""
+    @score = ""
+    @evalue = ""
+    @a_species_matches = []
+    @a_genus_matches = []
+    @a_other_matches = []
+    @h_sequences = {}
   end
   def reset
     # an we dry this up by combining with #initialize in some way
-       @target = "Iter_num"
-       @iteration = []
-       @iter_num = 0
-       @iteration_query_def = ""
-       @hit_def = ""
-       @score = ""
-       @evalue = ""
+    @target = "Iter_num"
+    @iteration = []
+    @iter_num = 0
+    @iteration_query_def = ""
+    @hit_def = ""
+    @score = ""
+    @evalue = ""
   end
-  
+
   def tag_start(name, attributes)
     #puts "Start #{name}"
     if @target == "Iter_num"
@@ -59,13 +59,13 @@ class BlastListener
       if name == "Hsp_evalue" then
         @target = "Hsp_evalue_value"
       end
-     elsif @target == "Hsp_qseq" then
-        if name == "Hsp_qseq" then
-          @target = "Hsp_qseq_value"
-        end
+    elsif @target == "Hsp_qseq" then
+      if name == "Hsp_qseq" then
+        @target = "Hsp_qseq_value"
+      end
     end
   end
-  
+
   def tag_end(name)
     if name == "Iteration_hits" then
       # It's time to evaluate the iteration for which bin it goes in.
@@ -77,7 +77,7 @@ class BlastListener
       # Will listener just stop when blast output used up?
     end
   end
-  
+
   def text(tag_text)
     if @target == "Iter_num_value"
       puts "Iteration number: " + tag_text
@@ -116,7 +116,7 @@ class BlastListener
     puts "genus_reg : #{genus_reg.to_s}"
     species_reg = Regexp.new("\s#{@species}\s")
     puts "species_reg : #{species_reg.to_s}"
-    
+
     other_match = false
     genus_match = false
     species_match = false
@@ -134,13 +134,14 @@ class BlastListener
         end
       else
         if hit_hold == "" then
-          hit_hold = hit_def
           #
           if i[2]  < 1.0
+            hit_hold = hit_def
             other_match = true
           end 
         end
       end
+    end
     if other_match then
       # add to other list
       @a_other_matches<< @iteration_query_def + "\t" + hit_hold
@@ -156,29 +157,20 @@ class BlastListener
     else
       # do a no_matches list???
     end
-    # f = File.open("#{@bac_dir}/#{@ncid}_species_matches", "w")
-    #     @a_species_matches.each{|hit|f.puts ">" + hit}
-    #     f.close
-    #     f = File.open("#{@bac_dir}/#{@ncid}_genus_matches", "w")
-    #     @a_genus_matches.each{|hit|f.puts ">" + hit}
-    #     f.close
-    #     f = File.open("#{@bac_dir}/#{@ncid}_other_matches", "w")
-    #     @a_other_matches.each{|hit|f.puts ">" + hit}
-    #     f.close
   end
-  
+
   def species_matches
     @a_species_matches
   end
-  
+
   def genus_matches
     @a_genus_matches
   end
-  
+
   def other_matches
     @a_other_matches
   end
-  
+
 end
 
 # <Iteration_query-def>NC_913trunc_38</Iteration_query-def>
