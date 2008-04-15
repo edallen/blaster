@@ -19,9 +19,11 @@ class BlastHash < Hash
   def fill
     if File.exist?(@yaml_path)
       h_yaml = YAML.load_file(@yaml_path)
+      raise "No h_yaml contents to load" if h_yaml.length == 0
       h_yaml.each{|y_key,y_val| self[y_key] = y_val}
     else
       self.fill_from_whole_genome()
+      raise "No blast_hash contents to write to file" if self.length == 0
       self.write_to_yaml()
     end
   end
@@ -43,6 +45,8 @@ class BlastHash < Hash
       if test_seq.pass_all_screens?
         good_count = good_count + 1
         self[hash_count] = test_seq
+      else
+        puts "#{test_seq} failed a screen"
       end
     end
   end
@@ -65,6 +69,7 @@ class BlastHash < Hash
   
   def write_to_fasta(bac_dir,nc_id)
     # NEED TO NAME OUTFILE
+    raise "empty blasthash for #{nc_id}" if self.length == 0
     @fasta_out_file = bac_dir + "#{nc_id}_blast_candidates.fasta"
     out_file = File.open(@fasta_out_file,"w")
     self.each{|fas_key,fas_seq| out_file.puts ">#{nc_id}_" << fas_key.to_s; out_file.puts fas_seq }
