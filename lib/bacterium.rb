@@ -82,7 +82,7 @@ class Bacterium
   
   def blast_other
      # blast against other blast db, output is a results file to parse
-     @blast_results_path = @bac_results_dir + "#{@nc_id}_blast_results_other.txt"
+     @blast_results_path = @bac_results_dir + "#{@nc_id}_blast_results_other.xml"
      @db_file = "#{@@config[:other_db_root]}"
      self.clear_blast_results_file
      self.blast(@no_human_match_path,@@other_format)
@@ -163,15 +163,15 @@ class Bacterium
     # read in results file created in #blast_other
     # decide for each input sequence, whether it falls into the other, genus, or species bin
     # call the appropriate bin routine
-    listener = BlastListener.new(@genus,@species,@ncid,@bac_results_dir)
+    listener = BlastListener.new(@genus,@species,@nc_id,@bac_results_dir)
     Document.parse_stream(file, listener) 
-    f = File.open("#{@bac_dir}/#{@ncid}_species_matches", "w")
+    f = File.open("#{@bac_results_dir}/#{@nc_id}_species_matches", "w")
           listener.species.each{|hit|f.puts hit}
     f.close
-    f = File.open("#{@bac_dir}/#{@ncid}_genus_matches", "w")
+    f = File.open("#{@bac_results_dir}/#{@nc_id}_genus_matches", "w")
           listener.genus.each{|hit|f.puts hit}
     f.close
-    f = File.open("#{@bac_dir}/#{@ncid}_other_matches", "w")
+    f = File.open("#{@bac_results_dir}/#{@nc_id}_other_matches", "w")
           listener.other.each{|hit|f.puts hit}
     f.close
   end

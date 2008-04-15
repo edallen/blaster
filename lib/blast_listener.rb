@@ -135,7 +135,7 @@ class BlastListener
       else
         if hit_hold == "" then
           #
-          if i[2]  < 1.0
+          if i[2].to_f  < 1.0
             hit_hold = hit_def
             other_match = true
           end 

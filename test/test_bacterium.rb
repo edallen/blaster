@@ -37,7 +37,7 @@ class TestBacterium < Test::Unit::TestCase
   
   def test_blast_other
      # # blast against other blast db segments, output is a results file to parse
-     #      @blast_results_path = @bac_results_dir + "#{@nc_id}_blast_results_other.txt"
+     #      @blast_results_path = @bac_results_dir + "#{@nc_id}_blast_results_other.xml"
      #      @db_file = "#{@@config[:other_db_root]}"
      #      self.clear_blast_results_file
      #      self.blast

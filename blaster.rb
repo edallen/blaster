@@ -19,20 +19,25 @@ blaster = BlastFlora.new()
 puts "made a BlastFlora object"
 # Iterate over a_bacteria, making a Bacterium object for each, and telling it to blast itself
 blaster.a_bacteria.each do |b|
-  bac = Bacterium.new(b[:nc_id],b[:genus],b[:species],b[:strain], true)
-  puts "made Bacterium for #{b[:nc_id]} #{b[:genus]} #{b[:species]} #{b[:strain]}"
-  bac.set_blast_candidate_file_name()
-  puts "set candidate file name"
-  bac.blast_hash.write_to_fasta(bac.bac_results_dir,bac.nc_id)
-  puts "wrote out candidates file"
-  bac.blast_human()
-  puts "blasted against human DB"
-  bac.bin_human()
-  puts "Binned human db blast results"
-  bac.blast_other()
-  puts "blasted against other DB"
-  bac.parse_other()
-  puts "parsed and binned other db blast results"
+  begin
+    bac = Bacterium.new(b[:nc_id],b[:genus],b[:species],b[:strain], true)
+    puts "made Bacterium for #{b[:nc_id]} #{b[:genus]} #{b[:species]} #{b[:strain]}"
+    bac.set_blast_candidate_file_name()
+    puts "set candidate file name"
+    bac.blast_hash.write_to_fasta(bac.bac_results_dir,bac.nc_id)
+    puts "wrote out candidates file"
+    bac.blast_human()
+    puts "blasted against human DB"
+    bac.bin_human()
+    puts "Binned human db blast results"
+    bac.blast_other()
+    puts "blasted against other DB"
+    bac.parse_other()
+    puts "parsed and binned other db blast results"
+  rescue => error
+    puts "Error for this input genome file"
+    puts "#{error.class}: #{error.message}"
+  end
 end
 
 
