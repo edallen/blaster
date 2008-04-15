@@ -34,15 +34,25 @@ class BlastHash < Hash
     whole_seq = MyDNA.new(fasta.seq)
     hash_count = 0
     good_count = 0
+    if whole_seq.length < 60
+      just_one = true
+      puts "length: #{whole_seq.length.to_s}" 
+    else
+      just_one = false
+    end
     test_seq = MyDNA.new(whole_seq.slice!(0..39))
     puts ""
     puts "First test_seq in blast_hash:  " + test_seq
-    while whole_seq.length > 20
+    puts "just_one: #{just_one.to_s}"
+    
+    while just_one | (whole_seq.length > 19) 
       if hash_count > 0 then
         test_seq = test_seq[20..39] + whole_seq.slice!(0..19)
       end
       hash_count = hash_count + 1
+      just_one = false
       if test_seq.pass_all_screens?
+        puts "#{test_seq} passed all screens" 
         good_count = good_count + 1
         self[hash_count] = test_seq
       else

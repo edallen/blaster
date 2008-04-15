@@ -144,7 +144,7 @@ class Bacterium
     #a_not_matched.each{|i|puts "not matched: " + i }
 
     puts "Number of 40mers blasted: " + a_ids.length.to_s
-    puts "Number of 40mers showing hits: " + a_query_hits.length.to_s
+    puts "Number of query hits: " + a_query_hits.length.to_s
     puts "Number of 40mers not matched: " + a_not_matched.length.to_s
 
     f = File.open(@human_match_path, "w")
@@ -166,13 +166,13 @@ class Bacterium
     listener = BlastListener.new(@genus,@species,@nc_id,@bac_results_dir)
     Document.parse_stream(file, listener) 
     f = File.open("#{@bac_results_dir}/#{@nc_id}_species_matches", "w")
-          listener.species.each{|hit|f.puts hit}
+          listener.species_matches.each{|hit|f.puts hit}
     f.close
     f = File.open("#{@bac_results_dir}/#{@nc_id}_genus_matches", "w")
-          listener.genus.each{|hit|f.puts hit}
+          listener.genus_matches.each{|hit|f.puts hit}
     f.close
     f = File.open("#{@bac_results_dir}/#{@nc_id}_other_matches", "w")
-          listener.other.each{|hit|f.puts hit}
+          listener.other_matches.each{|hit|f.puts hit}
     f.close
   end
   
