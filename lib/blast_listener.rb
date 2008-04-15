@@ -8,7 +8,7 @@ class BlastListener
     config_path = File.expand_path(File.dirname(__FILE__) + "/../config/config.yaml")
     @config = YAML.load_file(config_path)
     @evalue_threshold = @config[:evalue_threshold].to_f
-
+    puts  "evalue threshold used: #{@evalue_threshold.to_s}"
     @genus = genus
     @species = species
     @ncid = ncid
@@ -120,11 +120,12 @@ class BlastListener
     puts "genus_reg : #{genus_reg.to_s}"
     species_reg = Regexp.new("\s#{@species}\s")
     puts "species_reg : #{species_reg.to_s}"
-
+    shigella_reg = Regexp.new("^Shigella\s")
     other_match = false
     genus_match = false
     species_match = false
     hit_hold = ""
+    genus_hold = ""
     @iteration.each do |i|
       #How it was stored in #text:    @iteration[@hit_num] = [@hit_def,@score,@evalue]
       hit_def = i[0]
@@ -136,9 +137,13 @@ class BlastListener
         else
           genus_match = true
         end
+      elsif @genus == "Escherichia" && hit_def =~ shigella_reg
+        if genus_hold == "" then
+          genus_hold = hit_def
+        end
+        genus_match = true
       else
         if hit_hold == "" then
-          #
           if i[2].to_f  < @evalue_threshold
             hit_hold = hit_def
             other_match = true
@@ -156,7 +161,11 @@ class BlastListener
       puts @iteration_query_def + " added to species list"
     elsif genus_match then
       # add to genus list
-      @a_genus_matches<< @iteration_query_def
+      if genus_hold == "" then
+        @a_genus_matches<< @iteration_query_def
+      else
+        @a_genus_matches<< @iteration_query_def + "\t" + genus_hold
+      end
       puts @iteration_query_def + " added to genus list"
     else
       # do a no_matches list???
