@@ -5,6 +5,10 @@ include REXML
 class BlastListener
   include StreamListener
   def initialize(genus,species,ncid,bac_dir)
+    config_path = File.expand_path(File.dirname(__FILE__) + "/../config/config.yaml")
+    @config = YAML.load_file(config_path)
+    @evalue_threshold = @config[:evalue_threshold].to_f
+
     @genus = genus
     @species = species
     @ncid = ncid
@@ -135,7 +139,7 @@ class BlastListener
       else
         if hit_hold == "" then
           #
-          if i[2].to_f  < 1.0
+          if i[2].to_f  < @evalue_threshold
             hit_hold = hit_def
             other_match = true
           end 
@@ -172,34 +176,3 @@ class BlastListener
   end
 
 end
-
-# <Iteration_query-def>NC_913trunc_38</Iteration_query-def>
-# <Iteration_hits>   
-#   <Hit>
-#     <Hit_def>Escherichia coli W3110 DNA, complete genome &gt;gi|85674274|dbj|AP009048.1| Escherichia coli W3110 DNA, complete genome</Hit_def>
-#     <Hit_accession>NC_009648
-#     <Hit_hsps>
-#       <Hsp>
-#         <Hsp_evalue>  # or other metric
-
-# Read for <Iteration>
-# Read for <Iteration_query-def>
-# Take text between tags to be a key
-#   Read for <Hit_def>
-#      Take the text following and look for Genus and species match
-#         If both match, note as possible species match, look at next hit, finishing if </Iteration_hits> met first
-#         Else if only genus matches, note as possible genus match, and continue as above
-#         Else (no genus match) capture Hsp_evalue, record mismatch to bin_other, start looking for next Iteration_query-def
-#         If got to </Iteration_hits> then check genus vs species match level, record to pertinent bin, start looking for next Iteration or </BlastOutput_iterations> and quit
-#         
-
-# states
-#   Looking for Iteration
-#   Looking for Interation_query-def
-#   Getting Iteration_query-def value
-#   Looking for a Hit_def
-#   Getting Hit_def value
-#   Found Genus-Species Mismatch
-#   Found Genus only match
-#   Found Blast_output-iterations, write out and end
-#   

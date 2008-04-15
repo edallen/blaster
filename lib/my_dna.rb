@@ -36,10 +36,26 @@ class MyDNA < Bio::Sequence::NA
   
   def pass_all_screens?
     loopback_match_length = 8
-    return false if ! self.cg_center?
-    return false if self.run_of_four_bases?
-    return false if ! self.gc_18_to_22?
-    return false if self.loopback?(loopback_match_length)
+
+    if ! self.cg_center?
+      puts "failed cg center"
+      return false 
+    end
+
+    if self.run_of_four_bases?
+      puts "failed run of 4 bases"
+      return false
+    end
+
+    if ! self.gc_18_to_22?
+      puts "failed gc 18 to 22"
+      return false
+    end
+
+    if self.loopback?(loopback_match_length)
+      puts "failed loopback"
+      return false
+    end
     return true
   end
 end
