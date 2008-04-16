@@ -57,7 +57,7 @@ class TestBacterium < Test::Unit::TestCase
   def test_bin_human
   
   end
-  def test_bin_other
+  def test_parse_other
 
   end
   
