@@ -14,4 +14,8 @@
 :genome_fastas_dir: "genome_fastas/"
 :blast_out_dir: "results/"
 :evalue_threshold: "1.0"
-
+:ignore_genera:
+- "Drosophila"
+- "Arabidopsis"
+- "Mus"
+- "Rattus"

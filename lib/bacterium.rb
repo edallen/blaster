@@ -155,25 +155,23 @@ class Bacterium
     a_not_matched.each{|miss|f.puts ">" + miss; f.puts h_sequences[miss]}
     f.close
   end
+  def get_key(fortymer)
+    a_fortymer = fortymer.split("_")
+    a_fortymer.last.to_i
+  end
   
   def parse_other
     file = File.new( @blast_results_path )
-    #doc = Document.new file
-    #doc.elements.each("BlastOutput") { |element| puts element.attributes["name"] }
     # read in results file created in #blast_other
     # decide for each input sequence, whether it falls into the other, genus, or species bin
     # call the appropriate bin routine
     listener = BlastListener.new(@genus,@species,@nc_id,@bac_results_dir)
     Document.parse_stream(file, listener) 
-    f = File.open("#{@bac_results_dir}/#{@nc_id}_species_matches", "w")
-          listener.species_matches.each{|hit|f.puts hit}
-    f.close
-    f = File.open("#{@bac_results_dir}/#{@nc_id}_genus_matches", "w")
-          listener.genus_matches.each{|hit|f.puts hit}
-    f.close
-    f = File.open("#{@bac_results_dir}/#{@nc_id}_other_matches", "w")
-          listener.other_matches.each{|hit|f.puts hit}
-    f.close
+    ["species","genus","other"].each do |term|
+      f = File.open("#{@bac_results_dir}/#{@nc_id}_#{term}_matches", "w")
+         listener.send("#{term}_matches".to_sym).each{|hit|f.puts hit;f.puts @blast_hash[get_key(hit)] if term != "other"}
+      f.close
+    end
   end
   
 end  

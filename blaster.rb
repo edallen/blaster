@@ -17,7 +17,7 @@ require 'bacterium'
 
 blaster = BlastFlora.new()
 puts "made a BlastFlora object"
-# Iterate over a_bacteria, making a Bacterium object for each, and telling it to blast itself
+# Iterate over a_bacteria, making a Bacterium object for each, and tell it to blast itself.
 blaster.a_bacteria.each do |b|
   begin
     bac = Bacterium.new(b[:nc_id],b[:genus],b[:species],b[:strain], true)

@@ -9,6 +9,8 @@ class BlastListener
     @config = YAML.load_file(config_path)
     @evalue_threshold = @config[:evalue_threshold].to_f
     puts  "evalue threshold used: #{@evalue_threshold.to_s}"
+    
+    @a_ignore = @config[:ignore_genera]|[]
     @genus = genus
     @species = species
     @ncid = ncid
@@ -112,15 +114,17 @@ class BlastListener
   end
 
   def bin 
-    # Doing simplest possible initial binning attempt, not evaluating score or evalue, just binning as a bad match if
-    # not matched to both genus and species
+    # Considering evalue in the binning, along with simple matches to genus and species, have a special case for E coli matching Shigella
+    # at genus level, should generalize to use a list of alias genera.
     puts "@genus going into regex: #{@genus}"
     puts "@species going into regex: #{@species}"
-    genus_reg = Regexp.new("^#{@genus}\s")
-    puts "genus_reg : #{genus_reg.to_s}"
-    species_reg = Regexp.new("\s#{@species}\s")
-    puts "species_reg : #{species_reg.to_s}"
-    shigella_reg = Regexp.new("^Shigella\s")
+    r_genus = Regexp.new("^#{@genus}\s")
+    puts "r_genus : #{r_genus.to_s}"
+    r_species = Regexp.new("\s#{@species}\s")
+    puts "r_species : #{r_species.to_s}"
+    r_shigella = Regexp.new("^Shigella\s")
+    r_ignore = Regexp.new("^(#{@a_ignore.join("|")})\s")
+    puts "r_ignore : #{r_ignore.to_s}"
     other_match = false
     genus_match = false
     species_match = false
@@ -129,19 +133,21 @@ class BlastListener
     @iteration.each do |i|
       #How it was stored in #text:    @iteration[@hit_num] = [@hit_def,@score,@evalue]
       hit_def = i[0]
-      if hit_def =~ genus_reg then
-        if hit_def =~ species_reg then
+      if hit_def =~ r_genus then
+        if hit_def =~ r_species then
           # do nothing - genus_match defaults to true
           species_match = true
           genus_match = true
         else
           genus_match = true
         end
-      elsif @genus == "Escherichia" && hit_def =~ shigella_reg
+      elsif @genus == "Escherichia" && hit_def =~ r_shigella
         if genus_hold == "" then
           genus_hold = hit_def
         end
         genus_match = true
+      elsif hit_def =~ r_ignore
+        # do nothing, ignore this match against unmeaningful genera
       else
         if hit_hold == "" then
           if i[2].to_f  < @evalue_threshold
