@@ -118,12 +118,12 @@ class BlastListener
     # at genus level, should generalize to use a list of alias genera.
     puts "@genus going into regex: #{@genus}"
     puts "@species going into regex: #{@species}"
-    r_genus = Regexp.new("^#{@genus}\s")
+    r_genus = Regexp.new("#{@genus}\s")
     puts "r_genus : #{r_genus.to_s}"
     r_species = Regexp.new("\s#{@species}\s")
     puts "r_species : #{r_species.to_s}"
-    r_shigella = Regexp.new("^Shigella\s")
-    r_ignore = Regexp.new("^(#{@a_ignore.join("|")})\s")
+    r_shigella = Regexp.new("Shigella\s")
+    r_ignore = Regexp.new("(#{@a_ignore.join("|")})\s")
     puts "r_ignore : #{r_ignore.to_s}"
     other_match = false
     genus_match = false
