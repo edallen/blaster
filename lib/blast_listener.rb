@@ -140,12 +140,14 @@ class BlastListener
           genus_match = true
         else
           genus_match = true
+          species_match = false
         end
       elsif @genus == "Escherichia" && hit_def =~ r_shigella
         if genus_hold == "" then
           genus_hold = hit_def
         end
         genus_match = true
+        species_match = false
       elsif hit_def =~ r_ignore
         # do nothing, ignore this match against unmeaningful genera
       else

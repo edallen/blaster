@@ -13,6 +13,7 @@ class Bacterium
   @@data_folder_path = Pathname.new(@@config[:blast_path] + @@config[:data_dir])
   @@results_folder_path = Pathname.new(@@config[:blast_path] + @@config[:results_dir])
   @@db_folder_path = Pathname.new(@@config[:blast_path] + @@config[:db_dir])
+  @@evalue_threshold = @@config[:evalue_threshold].to_f
   @@human_format = "9"
   @@other_format = "7"
   def initialize(nc_id,genus,species,strain,fill)
@@ -99,6 +100,7 @@ class Bacterium
     puts "Blasted #{file_to_blast} against #{@db_path}"
   end
   
+  
   def bin_human
     # Bin human matches vs non_matched
     @human_match_path = @bac_results_dir + "human_matched_#{@nc_id}"
@@ -108,8 +110,8 @@ class Bacterium
     f = File.open(@blast_candidates_file ,"r")
     file_data = f.read
     f.close
-    # regex looks for name lines beginning with ">"
-    regex = />(\S*)$/
+    # regexp looks for name lines beginning with ">"
+    r_seq_name = />(\S*)$/
     a_ids = []
     h_sequences = {}
     key = ""
@@ -117,7 +119,7 @@ class Bacterium
 
     file_data.each do |line| 
       # ID line or sequence line? Hash is keyed by IDs with sequence in values.
-      md = regex.match(line)
+      md = r_seq_name.match(line)
       if md != nil then
         a_ids << md[0]
         key = md[0]
@@ -129,13 +131,13 @@ class Bacterium
     #a_ids.each{|id| puts id}
     
     a_query_hits = []
-    query_regex = /#\sQuery:\s(\S*)$/ 
+    r_query = /#\sQuery:\s(\S*)$/ 
     File.open(@blast_results_path) do |file|
       file.each_line do |line|
-        md = query_regex.match(line)
-        if $1 != nil then
-          a_query_hits << $1
-          #puts "Query hit: " + $1
+        md = r_query.match(line)
+        if md[0] != nil then
+          a_query_hits << md[0]
+          #puts "Query hit: " + md[0]
         end
       end
     end 
@@ -155,6 +157,7 @@ class Bacterium
     a_not_matched.each{|miss|f.puts ">" + miss; f.puts h_sequences[miss]}
     f.close
   end
+  
   def get_key(fortymer)
     a_fortymer = fortymer.split("_")
     a_fortymer.last.to_i
