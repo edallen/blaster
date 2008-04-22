@@ -103,6 +103,7 @@ class Bacterium
   
   def bin_human
     # Bin human matches vs non_matched
+    puts "Entered bin_human"
     @human_match_path = @bac_results_dir + "human_matched_#{@nc_id}"
     @no_human_match_path = @bac_results_dir + "human_unmatched_#{@nc_id}"
 
@@ -116,7 +117,9 @@ class Bacterium
     h_sequences = {}
     key = ""
     value = ""
-
+    
+    puts "Human blast results file was read in"
+    
     file_data.each do |line| 
       # ID line or sequence line? Hash is keyed by IDs with sequence in values.
       md = r_seq_name.match(line)
@@ -129,19 +132,22 @@ class Bacterium
       end
     end
     #a_ids.each{|id| puts id}
+
+    puts "File data converted to h_sequences hash"
     
     a_query_hits = []
     r_query = /#\sQuery:\s(\S*)$/ 
     File.open(@blast_results_path) do |file|
       file.each_line do |line|
+        puts line
         md = r_query.match(line)
-        if md[0] != nil then
+        if md != nil then
           a_query_hits << md[0]
-          #puts "Query hit: " + md[0]
+          puts "Query hit: " + md[0]
         end
       end
     end 
-
+    
     a_not_matched = a_ids - a_query_hits
     #a_not_matched.each{|i|puts "not matched: " + i }
 
@@ -171,7 +177,7 @@ class Bacterium
     listener = BlastListener.new(@genus,@species,@nc_id,@bac_results_dir)
     Document.parse_stream(file, listener) 
     ["species","genus","other"].each do |term|
-      f = File.open("#{@bac_results_dir}/#{@nc_id}_#{term}_matches", "w")
+      f = File.open("#{@bac_results_dir}/#{term}_matches_#{@nc_id}", "w")
          listener.send("#{term}_matches".to_sym).each{|hit|f.puts hit;f.puts @blast_hash[get_key(hit)] if term != "other"}
       f.close
     end
