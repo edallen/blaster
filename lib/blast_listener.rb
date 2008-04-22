@@ -137,15 +137,17 @@ class BlastListener
         if hit_def =~ r_species then
           # do nothing - genus_match defaults to true
           species_match = true
-          genus_match = true
+          #genus_match = true
         else
           genus_match = true
+          #species_match = false
         end
       elsif @genus == "Escherichia" && hit_def =~ r_shigella
         if genus_hold == "" then
           genus_hold = hit_def
         end
         genus_match = true
+        #species_match = false
       elsif hit_def =~ r_ignore
         # do nothing, ignore this match against unmeaningful genera
       else
@@ -161,18 +163,19 @@ class BlastListener
       # add to other list
       @a_other_matches<< @iteration_query_def + "\t" + hit_hold
       puts @iteration_query_def + " added to other matches list"
-    elsif species_match then
-      # add to species list
-      @a_species_matches<< @iteration_query_def
-      puts @iteration_query_def + " added to species list"
     elsif genus_match then
       # add to genus list
       if genus_hold == "" then
         @a_genus_matches<< @iteration_query_def
       else
-        @a_genus_matches<< @iteration_query_def + "\t" + genus_hold
+        @a_genus_matches<< @iteration_query_def + "\t related genus match to: " + genus_hold
       end
       puts @iteration_query_def + " added to genus list"
+    elsif species_match then
+      # add to species list
+      @a_species_matches<< @iteration_query_def
+      puts @iteration_query_def + " added to species list"
+
     else
       # do a no_matches list???
     end

@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>config/config.yaml</string>
+	<string>lib/bacterium.rb</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -96,14 +96,14 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>122</integer>
+				<integer>2</integer>
 				<key>line</key>
-				<integer>171</integer>
+				<integer>102</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>114</integer>
+			<integer>107</integer>
 		</dict>
 		<key>lib/blast_flora.rb</key>
 		<dict>
@@ -131,21 +131,37 @@
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>27</integer>
+			<integer>24</integer>
 		</dict>
 		<key>lib/blast_listener.rb</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>0</integer>
+				<integer>4</integer>
 				<key>line</key>
-				<integer>185</integer>
+				<integer>9</integer>
 			</dict>
+			<key>columnSelection</key>
+			<false/>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>113</integer>
+			<integer>0</integer>
+			<key>selectFrom</key>
+			<dict>
+				<key>column</key>
+				<integer>55</integer>
+				<key>line</key>
+				<integer>9</integer>
+			</dict>
+			<key>selectTo</key>
+			<dict>
+				<key>column</key>
+				<integer>4</integer>
+				<key>line</key>
+				<integer>9</integer>
+			</dict>
 		</dict>
 		<key>lib/my_dna.rb</key>
 		<dict>
@@ -201,7 +217,7 @@
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>0</integer>
+			<integer>5</integer>
 		</dict>
 		<key>test/test_blast_listener.rb</key>
 		<dict>
@@ -269,6 +285,6 @@
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{451, 35}, {904, 973}}</string>
+	<string>{{608, 53}, {904, 973}}</string>
 </dict>
 </plist>

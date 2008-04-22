@@ -38,22 +38,22 @@ class MyDNA < Bio::Sequence::NA
     loopback_match_length = 8
 
     if ! self.cg_center?
-      puts "failed cg center"
+      #puts "failed cg center"
       return false 
     end
 
     if self.run_of_four_bases?
-      puts "failed run of 4 bases"
+      #puts "failed run of 4 bases"
       return false
     end
 
     if ! self.gc_18_to_22?
-      puts "failed gc 18 to 22"
+      #puts "failed gc 18 to 22"
       return false
     end
 
     if self.loopback?(loopback_match_length)
-      puts "failed loopback"
+      #puts "failed loopback"
       return false
     end
     return true

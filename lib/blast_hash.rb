@@ -52,11 +52,11 @@ class BlastHash < Hash
       hash_count = hash_count + 1
       just_one = false
       if test_seq.pass_all_screens?
-        puts "#{test_seq} passed all screens" 
+        # puts "#{test_seq} passed all screens" 
         good_count = good_count + 1
         self[hash_count] = test_seq
       else
-        puts "#{test_seq} failed a screen"
+        # puts "#{test_seq} failed a screen"
       end
     end
   end
