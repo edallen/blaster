@@ -164,7 +164,9 @@ class Bacterium
     f.close
   end
   
-  def get_key(fortymer)
+  def get_key(key_phrase)
+    a_phrase = key_phrase.split("\t")
+    fortymer = a_phrase[0]
     a_fortymer = fortymer.split("_")
     a_fortymer.last.to_i
   end
@@ -176,7 +178,7 @@ class Bacterium
     # call the appropriate bin routine
     listener = BlastListener.new(@genus,@species,@nc_id,@bac_results_dir)
     Document.parse_stream(file, listener) 
-    ["species","genus","other"].each do |term|
+    ["species","genus","other","no"].each do |term|
       f = File.open("#{@bac_results_dir}/#{term}_matches_#{@nc_id}", "w")
          listener.send("#{term}_matches".to_sym).each{|hit|f.puts hit;f.puts @blast_hash[get_key(hit)] if term != "other"}
       f.close

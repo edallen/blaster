@@ -26,6 +26,7 @@ class BlastListener
     @a_species_matches = []
     @a_genus_matches = []
     @a_other_matches = []
+    @a_no_matches = []
     @h_sequences = {}
   end
   def reset
@@ -168,16 +169,16 @@ class BlastListener
       if genus_hold == "" then
         @a_genus_matches<< @iteration_query_def
       else
-        @a_genus_matches<< @iteration_query_def + "\t related genus match to: " + genus_hold
+        @a_genus_matches<< @iteration_query_def + "\t related genus " + genus_hold
       end
       puts @iteration_query_def + " added to genus list"
     elsif species_match then
       # add to species list
       @a_species_matches<< @iteration_query_def
       puts @iteration_query_def + " added to species list"
-
     else
-      # do a no_matches list???
+      @a_no_matches<< @iteration_query_def
+       puts @iteration_query_def + " added to no match list"
     end
   end
 
@@ -192,5 +193,8 @@ class BlastListener
   def other_matches
     @a_other_matches
   end
+  def no_matches
+     @a_no_matches
+   end
 
 end

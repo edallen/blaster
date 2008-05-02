@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>lib/bacterium.rb</string>
+	<string>blaster.rb</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -26,9 +26,9 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>21</integer>
+				<integer>26</integer>
 				<key>line</key>
-				<integer>13</integer>
+				<integer>31</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
@@ -96,14 +96,14 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>2</integer>
+				<integer>37</integer>
 				<key>line</key>
-				<integer>102</integer>
+				<integer>167</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>107</integer>
+			<integer>136</integer>
 		</dict>
 		<key>lib/blast_flora.rb</key>
 		<dict>
@@ -124,44 +124,28 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>28</integer>
+				<integer>4</integer>
 				<key>line</key>
-				<integer>30</integer>
+				<integer>45</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>24</integer>
+			<integer>18</integer>
 		</dict>
 		<key>lib/blast_listener.rb</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>4</integer>
+				<integer>67</integer>
 				<key>line</key>
-				<integer>9</integer>
+				<integer>170</integer>
 			</dict>
-			<key>columnSelection</key>
-			<false/>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>0</integer>
-			<key>selectFrom</key>
-			<dict>
-				<key>column</key>
-				<integer>55</integer>
-				<key>line</key>
-				<integer>9</integer>
-			</dict>
-			<key>selectTo</key>
-			<dict>
-				<key>column</key>
-				<integer>4</integer>
-				<key>line</key>
-				<integer>9</integer>
-			</dict>
+			<integer>145</integer>
 		</dict>
 		<key>lib/my_dna.rb</key>
 		<dict>
@@ -170,26 +154,26 @@
 				<key>column</key>
 				<integer>7</integer>
 				<key>line</key>
-				<integer>42</integer>
+				<integer>55</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>0</integer>
+			<integer>7</integer>
 		</dict>
 		<key>test/test_bacterium.rb</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>16</integer>
+				<integer>2</integer>
 				<key>line</key>
 				<integer>59</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>3</integer>
+			<integer>0</integer>
 		</dict>
 		<key>test/test_blast_flora.rb</key>
 		<dict>
@@ -217,7 +201,7 @@
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>5</integer>
+			<integer>0</integer>
 		</dict>
 		<key>test/test_blast_listener.rb</key>
 		<dict>
@@ -231,7 +215,7 @@
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>145</integer>
+			<integer>0</integer>
 		</dict>
 		<key>test/test_my_dna.rb</key>
 		<dict>
@@ -267,24 +251,19 @@
 	<key>openDocuments</key>
 	<array>
 		<string>blaster.rb</string>
-		<string>test/test_blast_flora.rb</string>
-		<string>lib/blast_flora.rb</string>
-		<string>test/test_blast_hash.rb</string>
-		<string>test/test_bacterium.rb</string>
-		<string>test/test_my_dna.rb</string>
-		<string>test/test_blast_listener.rb</string>
-		<string>lib/my_dna.rb</string>
-		<string>blaster_plan.txt</string>
-		<string>lib/blast_hash.rb</string>
-		<string>lib/bacterium.rb</string>
 		<string>lib/blast_listener.rb</string>
-		<string>config/config_laptop.yaml</string>
-		<string>config/config_server.yaml</string>
-		<string>config/config.yaml</string>
+		<string>lib/my_dna.rb</string>
+		<string>test/test_bacterium.rb</string>
+		<string>test/test_blast_listener.rb</string>
+		<string>lib/bacterium.rb</string>
+		<string>test/test_my_dna.rb</string>
+		<string>lib/blast_hash.rb</string>
+		<string>test/test_blast_flora.rb</string>
+		<string>test/test_blast_hash.rb</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{608, 53}, {904, 973}}</string>
+	<string>{{686, 55}, {904, 973}}</string>
 </dict>
 </plist>
