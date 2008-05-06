@@ -34,7 +34,7 @@ class BactList
         id_block,genus,species,*a_strain = a_words
         strain = (a_strain.join(" ").split(','))[0].gsub(@r_sub,"_")
         puts "strain: " + strain
-        @a_bacts<< {:ncid=>ncid,:genus=>genus,:species=>species,:strain=>strain}
+        @a_bacts<< {:nc_id=>ncid,:genus=>genus,:species=>species,:strain=>strain}
         puts @a_bacts.to_s
       end
     end
