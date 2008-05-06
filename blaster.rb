@@ -20,8 +20,15 @@ puts "made a BlastFlora object"
 # Iterate over a_bacteria, making a Bacterium object for each, and tell it to blast itself.
 blaster.a_bacteria.each do |b|
   begin
+    # b.each_key{|k| puts "key:" + k.to_s + "   value: " + b[k].to_s }
+    # puts "b: " + b.to_s
+    # puts "step 1"
+    # puts "nc_id " + b[:nc_id]
+    # puts "genus " + b[:genus]
     bac = Bacterium.new(b[:nc_id],b[:genus],b[:species],b[:strain], true)
+    puts "step 2"
     puts "made Bacterium for #{b[:nc_id]} #{b[:genus]} #{b[:species]} #{b[:strain]}"
+    puts "step 3"
     bac.set_blast_candidate_file_name()
     puts "set candidate file name"
     bac.blast_hash.write_to_fasta(bac.bac_results_dir,bac.nc_id)
