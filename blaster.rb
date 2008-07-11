@@ -1,6 +1,6 @@
 #!/usr/local/bin/ruby
 
-# Ed Allen, Stanford Genome Technology Center, 4 March 2008
+# Ed Allen, Stanford Genome Technology Center, begun 4 March 2008
 # First scratch partial version Feb 20, 2008
 
 $: << File.expand_path(File.dirname(__FILE__) + "/./lib")
@@ -20,11 +20,6 @@ puts "made a BlastFlora object"
 # Iterate over a_bacteria, making a Bacterium object for each, and tell it to blast itself.
 blaster.a_bacteria.each do |b|
   begin
-    # b.each_key{|k| puts "key:" + k.to_s + "   value: " + b[k].to_s }
-    # puts "b: " + b.to_s
-    # puts "step 1"
-    # puts "nc_id " + b[:nc_id]
-    # puts "genus " + b[:genus]
     bac = Bacterium.new(b[:nc_id],b[:genus],b[:species],b[:strain], true)
     puts "step 2"
     puts "made Bacterium for #{b[:nc_id]} #{b[:genus]} #{b[:species]} #{b[:strain]}"

@@ -30,7 +30,7 @@ class BlastListener
     @h_sequences = {}
   end
   def reset
-    # an we dry this up by combining with #initialize in some way
+    # can we dry this up by combining with #initialize in some way?
     @target = "Iter_num"
     @iteration = []
     @iter_num = 0
@@ -80,8 +80,6 @@ class BlastListener
       self.reset()
     elsif name == "BlastOutput_iterations" then
       # We're done. DO ANYTHING TO EXIT?
-      # Or do we even need to check for being done? 
-      # Will listener just stop when blast output used up?
     end
   end
 
