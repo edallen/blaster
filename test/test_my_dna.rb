@@ -10,6 +10,20 @@ require 'test/unit'
 require '../lib/my_dna'
 
 class TestMyDNA < Test::Unit::TestCase
+  def test_is_gcat_true
+   dna = MyDNA.new('acataagtacatcacgcgcgcgcgcgtgcgtgcgatttat')
+   assert(dna.is_gcat?, "#{dna} is all gcat")
+   dna = MyDNA.new('atatatatatatatatatcgcgcgcgcgcgcgcgcgcgcg')
+   assert(dna.is_gcat?, "#{dna} is all gcat")
+  end
+  
+  def test_is_gcat_false
+    dna = MyDNA.new('nacatn')
+    assert(!dna.is_gcat?, "#{dna} is not all gcat")
+    dna = MyDNA.new('xacatx')
+    assert(!dna.is_gcat?, "#{dna} is not all gcat")
+  end
+  
   def test_loopback_true
     dna = MyDNA.new('aaaaaaaaatttttttttt')
     assert( dna.loopback?(3), "#{dna} has a loopback" )

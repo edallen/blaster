@@ -1,5 +1,11 @@
 
 class MyDNA < Bio::Sequence::NA
+  def is_gcat?
+    self !~ /[^gcat]/i
+  end
+  
+  
+  
   def loopback?(win_len)
     # NOTE -- assumption here of minimum unpaired bases in hairpin of 3, holding in variable loop_bend
     # NOTE -- #subseq tests out as being 1-based.
@@ -36,7 +42,11 @@ class MyDNA < Bio::Sequence::NA
   
   def pass_all_screens?
     loopback_match_length = 8
-
+    
+    if ! self.is_gcat?
+      return false
+    end
+    
     if ! self.cg_center?
       #puts "failed cg center"
       return false 
