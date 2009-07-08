@@ -1,0 +1,13 @@
+Will make a real README later. For now, the blaster_poster.ppt file
+ (I know, ugh, Powerpoint...) has the best documentation on the project. The
+file blaster_plan.txt has some older working notes to myself that may be 
+useful as well.
+
+As will be evident in the code, this was a "my first big ruby script outside
+of Rails" and I would have restructured the code quite a bit had my time at
+Stanford continued long enough for me to get back to it. But it does run and
+called a lot of good probes that Richard Hyman had synthesized, inserted,
+and used successfully.
+
+Ed Allen
+ed.allen1@gmail.com 
