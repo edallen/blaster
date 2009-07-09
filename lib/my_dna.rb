@@ -1,4 +1,4 @@
-
+# The Blaster project is copyright 2008, 2009, Stanford University, released as open source under the MIT license.
 class MyDNA < Bio::Sequence::NA
   def is_gcat?
     self !~ /[^gcat]/i

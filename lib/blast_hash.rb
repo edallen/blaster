@@ -1,3 +1,4 @@
+# The Blaster project is copyright 2008, 2009, Stanford University, released as open source under the MIT license.
 class BlastHash < Hash 
   # Ruby library & gem requires
   require 'rubygems'

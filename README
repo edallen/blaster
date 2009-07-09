@@ -1,5 +1,5 @@
 Blaster README
-This project is open source under the MIT license. 
+The Blaster project is copyright 2008, 2009, Stanford University, released as open source under the MIT license. 
 
 Will make a proper README later. For now, the blaster_poster.ppt file
  (I know, ugh, Powerpoint...) has the best documentation on the project. The
@@ -8,10 +8,9 @@ useful as well.
 
 As will be evident in the code, this was a "my first big ruby script outside
 of Rails" and I would have refactored the code quite a bit, finished more tests,
- etc, had my time at
-Stanford continued long enough for me to get back to it. But it does run and
-called a lot of good probes that Richard Hyman had synthesized, inserted,
-and used successfully.
+etc, had my time at Stanford continued long enough for me to get back to it. 
+But it does run and called a lot of good probes that Richard Hyman had synthesized
+ and used successfully.
 
 Ed Allen
 ed.allen1@gmail.com 

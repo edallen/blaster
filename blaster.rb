@@ -1,5 +1,5 @@
 #!/usr/local/bin/ruby
-
+# The Blaster project is copyright 2008, 2009, Stanford University, released as open source under the MIT license.
 # Ed Allen, Stanford Genome Technology Center, begun 4 March 2008
 # First scratch partial version Feb 20, 2008
 
