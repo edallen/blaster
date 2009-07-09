@@ -8,9 +8,13 @@ useful as well.
 
 As will be evident in the code, this was a "my first big ruby script outside
 of Rails" and I would have refactored the code quite a bit, finished more tests,
-etc, had my time at Stanford continued long enough for me to get back to it. 
+etc, had my time at Stanford continued long enough for me to go on with it. 
 But it does run and called a lot of good probes that Richard Hyman had synthesized
- and used successfully.
+ and used successfully. Releasing as open source at Richard's request.
+
+When the Other Genomic database splits like the human one did, possibly already, since this code was written in early 2008, this project will take some modification, mostly in bacterium.rb and an extensions list for it in config.yaml,  like the one for the human database there to iterate over the parts as it does for the Human database.
+
+A more sophisticated script running on a tighter schedule would parallelize to threads feeding multiple blast instances, possibly on multiple machines. This simple implementation, running blast on a dedicated Linux PC locally, generally got through two or three genomes a day, adequate to our purposes.
 
 Ed Allen
 ed.allen1@gmail.com 
